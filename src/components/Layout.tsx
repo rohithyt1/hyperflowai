@@ -4,7 +4,6 @@ import { Bot, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { VoiceChatbot } from './VoiceChatbot';
-import { ZoomControls } from './ZoomControls';
 
 interface LayoutProps {
   children: ReactNode;
@@ -149,7 +148,6 @@ export function Layout({ children }: LayoutProps) {
       </footer>
       
       <VoiceChatbot />
-      <ZoomControls />
     </div>
   );
 }
