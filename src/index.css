@@ -6,54 +6,54 @@
 
 @layer base {
   :root {
-    /* Dark theme base */
-    --background: 222 47% 4%;
+    /* Pure Black Space Theme */
+    --background: 0 0% 2%;
     --foreground: 210 40% 98%;
 
-    /* Card components */
-    --card: 224 39% 8%;
+    /* Card components - slightly lighter black */
+    --card: 0 0% 5%;
     --card-foreground: 210 40% 98%;
 
     /* Popover components */
-    --popover: 224 39% 8%;
+    --popover: 0 0% 5%;
     --popover-foreground: 210 40% 98%;
 
     /* Primary - Electric Blue */
     --primary: 217 91% 60%;
-    --primary-foreground: 222 47% 4%;
+    --primary-foreground: 0 0% 2%;
     --primary-glow: 217 91% 70%;
 
-    /* Secondary - Darker Blue */
-    --secondary: 224 39% 12%;
+    /* Secondary - Dark */
+    --secondary: 0 0% 8%;
     --secondary-foreground: 210 40% 98%;
 
     /* Muted elements */
-    --muted: 224 39% 8%;
+    --muted: 0 0% 6%;
     --muted-foreground: 215 20% 65%;
 
     /* Accent - Cyan Blue */
     --accent: 189 100% 56%;
-    --accent-foreground: 222 47% 4%;
+    --accent-foreground: 0 0% 2%;
 
     /* Destructive */
     --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
 
     /* Borders and inputs */
-    --border: 224 39% 15%;
-    --input: 224 39% 12%;
+    --border: 0 0% 12%;
+    --input: 0 0% 8%;
     --ring: 217 91% 60%;
 
     --radius: 0.75rem;
 
     /* Custom gradients */
     --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
-    --gradient-hero: linear-gradient(135deg, hsl(var(--background)), hsl(224 39% 6%));
-    --gradient-card: linear-gradient(135deg, hsl(var(--card)), hsl(224 39% 10%));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--background)), hsl(0 0% 4%));
+    --gradient-card: linear-gradient(135deg, hsl(var(--card)), hsl(0 0% 7%));
     
     /* Shadows and glows */
     --shadow-glow: 0 0 40px hsl(var(--primary) / 0.3);
-    --shadow-card: 0 10px 40px hsl(222 47% 2% / 0.5);
+    --shadow-card: 0 10px 40px hsl(0 0% 0% / 0.5);
     
     /* Animations */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -106,21 +106,37 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
+    background-color: hsl(0 0% 2%);
     background-image: 
-      radial-gradient(1px 1px at 20px 30px, hsl(var(--primary) / 0.4), transparent),
-      radial-gradient(1px 1px at 40px 70px, hsl(var(--accent) / 0.3), transparent),
-      radial-gradient(1px 1px at 50px 160px, hsl(var(--primary) / 0.3), transparent),
-      radial-gradient(1px 1px at 90px 40px, hsl(var(--foreground) / 0.3), transparent),
-      radial-gradient(1px 1px at 130px 80px, hsl(var(--primary) / 0.2), transparent),
-      radial-gradient(2px 2px at 160px 120px, hsl(var(--accent) / 0.4), transparent),
-      radial-gradient(1px 1px at 200px 50px, hsl(var(--foreground) / 0.2), transparent),
-      radial-gradient(1px 1px at 230px 180px, hsl(var(--primary) / 0.3), transparent),
-      radial-gradient(1px 1px at 280px 90px, hsl(var(--accent) / 0.2), transparent),
-      radial-gradient(2px 2px at 320px 140px, hsl(var(--primary) / 0.4), transparent),
-      radial-gradient(1px 1px at 360px 60px, hsl(var(--foreground) / 0.3), transparent),
-      radial-gradient(1px 1px at 400px 200px, hsl(var(--accent) / 0.3), transparent);
-    background-size: 420px 220px;
-    background-color: hsl(var(--background));
+      /* Layer 1: Tiny distant stars */
+      radial-gradient(1px 1px at 20px 30px, hsl(0 0% 100% / 0.8), transparent),
+      radial-gradient(1px 1px at 40px 70px, hsl(0 0% 100% / 0.6), transparent),
+      radial-gradient(1px 1px at 50px 160px, hsl(0 0% 100% / 0.5), transparent),
+      radial-gradient(1px 1px at 90px 40px, hsl(0 0% 100% / 0.7), transparent),
+      radial-gradient(1px 1px at 130px 80px, hsl(0 0% 100% / 0.4), transparent),
+      radial-gradient(1px 1px at 160px 120px, hsl(0 0% 100% / 0.6), transparent),
+      radial-gradient(1px 1px at 200px 50px, hsl(0 0% 100% / 0.5), transparent),
+      radial-gradient(1px 1px at 230px 180px, hsl(0 0% 100% / 0.7), transparent),
+      radial-gradient(1px 1px at 280px 90px, hsl(0 0% 100% / 0.4), transparent),
+      radial-gradient(1px 1px at 320px 140px, hsl(0 0% 100% / 0.6), transparent),
+      radial-gradient(1px 1px at 360px 60px, hsl(0 0% 100% / 0.5), transparent),
+      radial-gradient(1px 1px at 400px 200px, hsl(0 0% 100% / 0.7), transparent),
+      radial-gradient(1px 1px at 440px 100px, hsl(0 0% 100% / 0.5), transparent),
+      radial-gradient(1px 1px at 480px 150px, hsl(0 0% 100% / 0.6), transparent),
+      /* Layer 2: Medium stars */
+      radial-gradient(1.5px 1.5px at 100px 100px, hsl(0 0% 100% / 0.9), transparent),
+      radial-gradient(1.5px 1.5px at 250px 200px, hsl(217 91% 80% / 0.8), transparent),
+      radial-gradient(1.5px 1.5px at 350px 50px, hsl(0 0% 100% / 0.7), transparent),
+      radial-gradient(1.5px 1.5px at 450px 180px, hsl(189 100% 70% / 0.6), transparent),
+      /* Layer 3: Bright accent stars */
+      radial-gradient(2px 2px at 180px 80px, hsl(217 91% 70% / 0.9), transparent),
+      radial-gradient(2px 2px at 420px 120px, hsl(189 100% 60% / 0.8), transparent),
+      radial-gradient(2.5px 2.5px at 300px 220px, hsl(0 0% 100%), transparent),
+      /* Layer 4: Subtle nebula glow */
+      radial-gradient(ellipse 600px 400px at 30% 20%, hsl(217 91% 60% / 0.03), transparent),
+      radial-gradient(ellipse 500px 300px at 70% 80%, hsl(189 100% 50% / 0.02), transparent);
+    background-size: 500px 250px, 500px 250px, 500px 250px, 100% 100%;
+    background-repeat: repeat, repeat, repeat, no-repeat;
   }
 }
 
