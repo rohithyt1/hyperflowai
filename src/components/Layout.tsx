@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Bot, Menu, X } from 'lucide-react';
+import { Bot, Menu, X, Twitter, Linkedin, Instagram, Youtube, Mail, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { VoiceChatbot } from './VoiceChatbot';
@@ -33,7 +33,7 @@ export function Layout({ children }: LayoutProps) {
               <div className="w-8 h-8 bg-gradient-to-r from-primary to-accent rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                 <Bot className="w-5 h-5 text-primary-foreground" />
               </div>
-              <span className="text-xl font-bold text-glow">HyperFlow AI</span>
+              <span className="text-xl font-bold text-glow">HyperFlow</span>
             </Link>
 
             {/* Desktop Navigation */}
@@ -55,7 +55,7 @@ export function Layout({ children }: LayoutProps) {
                 className="btn-hero"
                 onClick={() => window.open('https://cal.com/star-ment-yrerge/30min?overlayCalendar=true', '_blank')}
               >
-                Book Meeting
+                Book Demo
               </Button>
             </div>
 
@@ -90,7 +90,7 @@ export function Layout({ children }: LayoutProps) {
                   className="btn-hero w-fit"
                   onClick={() => window.open('https://cal.com/star-ment-yrerge/30min?overlayCalendar=true', '_blank')}
                 >
-                  Book Meeting
+                  Book Demo
                 </Button>
               </div>
             </div>
@@ -107,6 +107,7 @@ export function Layout({ children }: LayoutProps) {
       <footer className="bg-card/50 border-t border-border/50 mt-20">
         <div className="container mx-auto px-6 py-12">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {/* Brand */}
             <div className="col-span-1 md:col-span-2">
               <div className="flex items-center space-x-2 mb-4">
                 <div className="w-8 h-8 bg-gradient-to-r from-primary to-accent rounded-lg flex items-center justify-center">
@@ -114,35 +115,60 @@ export function Layout({ children }: LayoutProps) {
                 </div>
                 <span className="text-xl font-bold text-glow">HyperFlow</span>
               </div>
-              <p className="text-muted-foreground mb-4 max-w-md">
-                Empowering businesses with intelligent AI agents for customer service, 
-                appointments, and automated workflows.
+              <p className="text-muted-foreground mb-6 max-w-md">
+                Your AI receptionist that answers every call, books appointments, and never takes a day off. 24/7/365.
               </p>
+              
+              {/* Social Links */}
+              <div className="flex items-center gap-4">
+                <a href="https://twitter.com/hyperflow" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-card border border-border/50 rounded-lg flex items-center justify-center hover:bg-primary/10 hover:border-primary/50 transition-all">
+                  <Twitter className="w-5 h-5 text-muted-foreground hover:text-primary" />
+                </a>
+                <a href="https://linkedin.com/company/hyperflow" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-card border border-border/50 rounded-lg flex items-center justify-center hover:bg-primary/10 hover:border-primary/50 transition-all">
+                  <Linkedin className="w-5 h-5 text-muted-foreground hover:text-primary" />
+                </a>
+                <a href="https://instagram.com/hyperflow" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-card border border-border/50 rounded-lg flex items-center justify-center hover:bg-primary/10 hover:border-primary/50 transition-all">
+                  <Instagram className="w-5 h-5 text-muted-foreground hover:text-primary" />
+                </a>
+                <a href="https://youtube.com/@hyperflow" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-card border border-border/50 rounded-lg flex items-center justify-center hover:bg-primary/10 hover:border-primary/50 transition-all">
+                  <Youtube className="w-5 h-5 text-muted-foreground hover:text-primary" />
+                </a>
+              </div>
             </div>
             
+            {/* Quick Links */}
             <div>
-              <h3 className="font-semibold mb-4">Services</h3>
+              <h3 className="font-semibold mb-4">Quick Links</h3>
               <ul className="space-y-2 text-muted-foreground">
-                <li><Link to="/services" className="hover:text-primary transition-colors">AI Chat Bots</Link></li>
-                <li><Link to="/services" className="hover:text-primary transition-colors">Appointment Bots</Link></li>
-                <li><Link to="/services" className="hover:text-primary transition-colors">Website Agents</Link></li>
-                <li><Link to="/services" className="hover:text-primary transition-colors">Custom Solutions</Link></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 className="font-semibold mb-4">Company</h3>
-              <ul className="space-y-2 text-muted-foreground">
+                <li><Link to="/" className="hover:text-primary transition-colors">Home</Link></li>
+                <li><Link to="/services" className="hover:text-primary transition-colors">Pricing</Link></li>
                 <li><Link to="/about" className="hover:text-primary transition-colors">About Us</Link></li>
                 <li><Link to="/contact" className="hover:text-primary transition-colors">Contact</Link></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Terms of Service</a></li>
               </ul>
+            </div>
+            
+            {/* Contact */}
+            <div>
+              <h3 className="font-semibold mb-4">Contact</h3>
+              <ul className="space-y-3 text-muted-foreground">
+                <li className="flex items-center gap-2">
+                  <Mail className="w-4 h-4 text-primary" />
+                  <a href="mailto:hello@hyperflow.com" className="hover:text-primary transition-colors">hello@hyperflow.com</a>
+                </li>
+                <li className="flex items-center gap-2">
+                  <Phone className="w-4 h-4 text-primary" />
+                  <a href="tel:+1234567890" className="hover:text-primary transition-colors">+1 (234) 567-890</a>
+                </li>
+              </ul>
+              <div className="mt-4 space-y-2 text-sm text-muted-foreground">
+                <a href="#" className="block hover:text-primary transition-colors">Privacy Policy</a>
+                <a href="#" className="block hover:text-primary transition-colors">Terms of Service</a>
+              </div>
             </div>
           </div>
           
           <div className="border-t border-border/50 mt-8 pt-8 text-center text-muted-foreground">
-            <p>&copy; 2024 HyperFlow. All rights reserved.</p>
+            <p>&copy; 2026 HyperFlow. All rights reserved.</p>
           </div>
         </div>
       </footer>
