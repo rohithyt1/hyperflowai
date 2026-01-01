@@ -3,6 +3,8 @@ import { Hero } from '@/components/Hero';
 import { OfferTimer } from '@/components/OfferTimer';
 import { HowItWorks } from '@/components/HowItWorks';
 import { ProblemSolution } from '@/components/ProblemSolution';
+import { ROICalculator } from '@/components/ROICalculator';
+import { VoiceSamples } from '@/components/VoiceSamples';
 import { SimpleDemo } from '@/components/SimpleDemo';
 import { TestimonialsCarousel } from '@/components/TestimonialsCarousel';
 import { PaymentGateway } from '@/components/PaymentGateway';
@@ -14,14 +16,16 @@ const Index = () => {
   return (
     <Layout>
       <Hero />
-      <OfferTimer />
       <HowItWorks />
       <ProblemSolution />
+      <ROICalculator />
+      <VoiceSamples />
       <SimpleDemo />
       <TestimonialsCarousel />
       <PaymentGateway />
       <SimpleFAQ />
       <FinalCTA />
+      <OfferTimer />
       <Chatbot />
     </Layout>
   );

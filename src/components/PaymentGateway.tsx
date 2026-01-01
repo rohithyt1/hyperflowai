@@ -1,22 +1,15 @@
 import { useState } from 'react';
-import { CheckCircle, ArrowRight, Zap, Phone, Star } from 'lucide-react';
+import { CheckCircle, ArrowRight, Zap, Phone, Star, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
 
 export function PaymentGateway() {
-  const [selectedPlan, setSelectedPlan] = useState<string>('');
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const handlePayment = async (planId: string) => {
+  const handlePayment = async () => {
     setIsProcessing(true);
-    setSelectedPlan(planId);
 
     try {
-      if (planId === 'enterprise') {
-        window.open('https://cal.com/star-ment-yrerge/30min?overlayCalendar=true', '_blank');
-        return;
-      }
-
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       toast({
@@ -34,7 +27,6 @@ export function PaymentGateway() {
       });
     } finally {
       setIsProcessing(false);
-      setSelectedPlan('');
     }
   };
 
@@ -61,7 +53,7 @@ export function PaymentGateway() {
             <div className="absolute -top-3 left-1/2 -translate-x-1/2">
               <div className="flex items-center gap-1.5 bg-primary text-primary-foreground px-4 py-1.5 rounded-full text-sm font-semibold">
                 <Star className="w-4 h-4 fill-current" />
-                Most Popular
+                Limited Time Offer
               </div>
             </div>
 
@@ -74,13 +66,17 @@ export function PaymentGateway() {
               <p className="text-muted-foreground">Everything you need to never miss a call</p>
             </div>
 
-            {/* Price */}
+            {/* Trial Price */}
             <div className="text-center py-6 border-y border-border/50">
-              <div className="flex items-baseline justify-center gap-1">
-                <span className="text-5xl sm:text-6xl font-bold text-primary">$297</span>
-                <span className="text-muted-foreground text-lg">/month</span>
+              <div className="mb-2">
+                <span className="bg-accent/20 text-accent px-3 py-1 rounded-full text-sm font-semibold">
+                  7-Day Trial
+                </span>
               </div>
-              <p className="text-sm text-muted-foreground mt-2">Billed monthly • Cancel anytime</p>
+              <div className="flex items-baseline justify-center gap-1">
+                <span className="text-5xl sm:text-6xl font-bold text-primary">$19</span>
+              </div>
+              <p className="text-sm text-muted-foreground mt-2">Then $297/month • Cancel anytime</p>
             </div>
 
             {/* Features */}
@@ -107,22 +103,23 @@ export function PaymentGateway() {
             {/* CTA */}
             <Button
               className="w-full btn-hero text-lg py-6 group"
-              onClick={() => handlePayment('pro')}
-              disabled={isProcessing && selectedPlan === 'pro'}
+              onClick={handlePayment}
+              disabled={isProcessing}
             >
-              {isProcessing && selectedPlan === 'pro' ? (
+              {isProcessing ? (
                 'Processing...'
               ) : (
                 <>
-                  Start Free Trial
+                  Start 7-Day Trial — $19
                   <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                 </>
               )}
             </Button>
 
-            <p className="text-center text-sm text-muted-foreground mt-4">
-              14-day free trial • No credit card required
-            </p>
+            <div className="flex items-center justify-center gap-2 mt-4 text-sm text-muted-foreground">
+              <Shield className="w-4 h-4 text-primary" />
+              <span>Secure payment • Money-back guarantee</span>
+            </div>
           </div>
         </div>
 
