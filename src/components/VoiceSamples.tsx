@@ -1,63 +1,152 @@
-import { useState, useRef } from 'react';
-import { Play, Pause, Volume2, User } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Play, Pause, Volume2, User, Phone, Building2, Stethoscope, Scale, Wrench, Utensils } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface VoiceSample {
   id: string;
   name: string;
   description: string;
-  accent: string;
-  gender: 'Male' | 'Female';
-  audioUrl: string;
+  business: string;
+  icon: React.ReactNode;
+  script: string;
+  voiceSettings: {
+    pitch: number;
+    rate: number;
+    preferredVoice?: string;
+  };
 }
 
-// Using ElevenLabs public preview URLs
 const voiceSamples: VoiceSample[] = [
   {
-    id: 'sarah',
+    id: 'dental',
+    name: 'Emma',
+    description: 'Warm & Professional',
+    business: 'Dental Clinic',
+    icon: <Stethoscope className="w-5 h-5" />,
+    script: "Good morning! Thank you for calling Bright Smile Dental. This is Emma speaking. How may I assist you today? We have appointments available this week, and I'd be happy to help you schedule a visit with Dr. Johnson.",
+    voiceSettings: { pitch: 1.1, rate: 0.95, preferredVoice: 'female' },
+  },
+  {
+    id: 'law',
+    name: 'Michael',
+    description: 'Confident & Trustworthy',
+    business: 'Law Firm',
+    icon: <Scale className="w-5 h-5" />,
+    script: "Good afternoon, Miller and Associates Law Firm. This is Michael. How may I direct your call? If you're calling about a consultation, I can check our attorneys' availability and get you scheduled at a time that works best for you.",
+    voiceSettings: { pitch: 0.9, rate: 0.9, preferredVoice: 'male' },
+  },
+  {
+    id: 'realestate',
     name: 'Sarah',
-    description: 'Professional & Warm',
-    accent: 'American',
-    gender: 'Female',
-    audioUrl: 'https://cdn.openai.com/API/docs/audio/alloy.wav',
+    description: 'Friendly & Energetic',
+    business: 'Real Estate',
+    icon: <Building2 className="w-5 h-5" />,
+    script: "Hi there! Thanks for calling Premier Realty. I'm Sarah. Are you looking to buy, sell, or rent? We have some amazing new listings that just came on the market. I'd love to connect you with one of our agents who specializes in your area.",
+    voiceSettings: { pitch: 1.15, rate: 1.0, preferredVoice: 'female' },
   },
   {
-    id: 'roger',
-    name: 'Roger',
-    description: 'Confident & Clear',
-    accent: 'American',
-    gender: 'Male',
-    audioUrl: 'https://cdn.openai.com/API/docs/audio/echo.wav',
+    id: 'hvac',
+    name: 'James',
+    description: 'Reliable & Helpful',
+    business: 'HVAC Services',
+    icon: <Wrench className="w-5 h-5" />,
+    script: "Thank you for calling Comfort Pro Heating and Cooling. This is James. How can I help you today? We offer same-day service for emergencies and I can get a technician out to you as soon as this afternoon if needed.",
+    voiceSettings: { pitch: 0.95, rate: 0.92, preferredVoice: 'male' },
   },
   {
-    id: 'alice',
-    name: 'Alice',
-    description: 'Friendly & Approachable',
-    accent: 'British',
-    gender: 'Female',
-    audioUrl: 'https://cdn.openai.com/API/docs/audio/shimmer.wav',
+    id: 'restaurant',
+    name: 'Lisa',
+    description: 'Cheerful & Welcoming',
+    business: 'Restaurant',
+    icon: <Utensils className="w-5 h-5" />,
+    script: "Hello and thank you for calling The Golden Fork! This is Lisa. Would you like to make a reservation? We have tables available for tonight. Our chef's special today is pan-seared salmon with seasonal vegetables. How many will be dining?",
+    voiceSettings: { pitch: 1.2, rate: 1.05, preferredVoice: 'female' },
   },
   {
-    id: 'brian',
-    name: 'Brian',
-    description: 'Deep & Trustworthy',
-    accent: 'American',
-    gender: 'Male',
-    audioUrl: 'https://cdn.openai.com/API/docs/audio/onyx.wav',
+    id: 'medical',
+    name: 'David',
+    description: 'Calm & Reassuring',
+    business: 'Medical Office',
+    icon: <Stethoscope className="w-5 h-5" />,
+    script: "Good morning, Wellness Medical Center. This is David speaking. How may I assist you? I can help you schedule an appointment, request prescription refills, or connect you with our nursing staff if you have medical questions.",
+    voiceSettings: { pitch: 0.85, rate: 0.88, preferredVoice: 'male' },
+  },
+  {
+    id: 'insurance',
+    name: 'Rachel',
+    description: 'Clear & Informative',
+    business: 'Insurance Agency',
+    icon: <Building2 className="w-5 h-5" />,
+    script: "Hello, thank you for calling Secure Shield Insurance. I'm Rachel. Are you calling about an existing policy or interested in getting a quote? We offer competitive rates on auto, home, and life insurance. I'm here to help you find the best coverage.",
+    voiceSettings: { pitch: 1.05, rate: 0.95, preferredVoice: 'female' },
+  },
+  {
+    id: 'automotive',
+    name: 'Chris',
+    description: 'Direct & Professional',
+    business: 'Auto Dealership',
+    icon: <Wrench className="w-5 h-5" />,
+    script: "Thanks for calling Metro Auto Group. This is Chris. Are you looking for sales, service, or parts today? We just got some great new inventory in, and we're offering special financing rates this month. How can I help you find your perfect vehicle?",
+    voiceSettings: { pitch: 0.92, rate: 0.95, preferredVoice: 'male' },
   },
 ];
 
 export function VoiceSamples() {
   const [playingId, setPlayingId] = useState<string | null>(null);
-  const [loadingId, setLoadingId] = useState<string | null>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [availableVoices, setAvailableVoices] = useState<SpeechSynthesisVoice[]>([]);
+  const speechRef = useRef<SpeechSynthesisUtterance | null>(null);
 
-  const handlePlay = async (sample: VoiceSample) => {
-    // Stop current audio if playing
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current = null;
+  useEffect(() => {
+    const loadVoices = () => {
+      const voices = window.speechSynthesis.getVoices();
+      setAvailableVoices(voices);
+    };
+
+    loadVoices();
+    window.speechSynthesis.onvoiceschanged = loadVoices;
+
+    return () => {
+      window.speechSynthesis.cancel();
+    };
+  }, []);
+
+  const getVoice = (preferredGender?: string): SpeechSynthesisVoice | null => {
+    if (availableVoices.length === 0) return null;
+
+    // Prefer English voices
+    const englishVoices = availableVoices.filter(v => v.lang.startsWith('en'));
+    
+    if (preferredGender === 'female') {
+      const femaleVoice = englishVoices.find(v => 
+        v.name.toLowerCase().includes('female') || 
+        v.name.toLowerCase().includes('samantha') ||
+        v.name.toLowerCase().includes('victoria') ||
+        v.name.toLowerCase().includes('karen') ||
+        v.name.toLowerCase().includes('fiona') ||
+        v.name.toLowerCase().includes('zira') ||
+        v.name.toLowerCase().includes('hazel')
+      );
+      if (femaleVoice) return femaleVoice;
     }
+    
+    if (preferredGender === 'male') {
+      const maleVoice = englishVoices.find(v => 
+        v.name.toLowerCase().includes('male') || 
+        v.name.toLowerCase().includes('daniel') ||
+        v.name.toLowerCase().includes('david') ||
+        v.name.toLowerCase().includes('james') ||
+        v.name.toLowerCase().includes('alex') ||
+        v.name.toLowerCase().includes('mark')
+      );
+      if (maleVoice) return maleVoice;
+    }
+
+    return englishVoices[0] || availableVoices[0];
+  };
+
+  const handlePlay = (sample: VoiceSample) => {
+    // Stop current speech if playing
+    window.speechSynthesis.cancel();
 
     // If clicking the same sample, just stop
     if (playingId === sample.id) {
@@ -65,33 +154,36 @@ export function VoiceSamples() {
       return;
     }
 
-    setLoadingId(sample.id);
+    const utterance = new SpeechSynthesisUtterance(sample.script);
+    speechRef.current = utterance;
 
-    try {
-      const audio = new Audio(sample.audioUrl);
-      audioRef.current = audio;
-      
-      audio.oncanplaythrough = () => {
-        setLoadingId(null);
-        setPlayingId(sample.id);
-        audio.play();
-      };
-
-      audio.onended = () => {
-        setPlayingId(null);
-      };
-
-      audio.onerror = () => {
-        setLoadingId(null);
-        setPlayingId(null);
-        console.error('Failed to load audio');
-      };
-
-      audio.load();
-    } catch (error) {
-      setLoadingId(null);
-      console.error('Audio playback error:', error);
+    const voice = getVoice(sample.voiceSettings.preferredVoice);
+    if (voice) {
+      utterance.voice = voice;
     }
+
+    utterance.pitch = sample.voiceSettings.pitch;
+    utterance.rate = sample.voiceSettings.rate;
+    utterance.volume = 1;
+
+    utterance.onstart = () => {
+      setPlayingId(sample.id);
+    };
+
+    utterance.onend = () => {
+      setPlayingId(null);
+    };
+
+    utterance.onerror = () => {
+      setPlayingId(null);
+    };
+
+    window.speechSynthesis.speak(utterance);
+  };
+
+  const stopSpeech = () => {
+    window.speechSynthesis.cancel();
+    setPlayingId(null);
   };
 
   return (
@@ -103,66 +195,68 @@ export function VoiceSamples() {
         {/* Header */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 px-4 py-2 rounded-full text-sm font-medium mb-4">
-            <Volume2 className="w-4 h-4 text-primary" />
-            <span>Hear It For Yourself</span>
+            <Phone className="w-4 h-4 text-primary" />
+            <span>Real Business Conversations</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-            Sample <span className="text-glow">AI Voices</span>
+            Hear Your <span className="text-glow">AI Receptionist</span> In Action
           </h2>
-          <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-            Listen to our premium voices. We'll customize one to match your brand perfectly.
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            Listen to how our AI handles calls for different industries. Each voice is customized for the perfect business tone.
           </p>
         </div>
 
         {/* Voice Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
           {voiceSamples.map((sample) => (
             <div
               key={sample.id}
-              className={`card-glow p-5 transition-all duration-300 cursor-pointer hover:scale-105 ${
-                playingId === sample.id ? 'border-primary/50 bg-primary/5' : ''
+              className={`card-glow p-5 transition-all duration-300 cursor-pointer hover:scale-[1.02] ${
+                playingId === sample.id ? 'border-primary/50 bg-primary/5 ring-2 ring-primary/30' : ''
               }`}
-              onClick={() => handlePlay(sample)}
+              onClick={() => playingId === sample.id ? stopSpeech() : handlePlay(sample)}
             >
+              {/* Business Badge */}
+              <div className="flex items-center gap-2 text-xs text-primary mb-3">
+                {sample.icon}
+                <span className="font-medium">{sample.business}</span>
+              </div>
+
               <div className="flex items-center gap-3 mb-3">
-                <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
-                  sample.gender === 'Female' 
+                <div className={`w-11 h-11 rounded-full flex items-center justify-center ${
+                  sample.voiceSettings.preferredVoice === 'female' 
                     ? 'bg-pink-500/20 text-pink-400' 
                     : 'bg-blue-500/20 text-blue-400'
                 }`}>
-                  <User className="w-6 h-6" />
+                  <User className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-bold">{sample.name}</h3>
-                  <p className="text-xs text-muted-foreground">{sample.accent}</p>
+                  <h3 className="font-bold text-sm">{sample.name}</h3>
+                  <p className="text-xs text-muted-foreground">{sample.description}</p>
                 </div>
               </div>
 
-              <p className="text-sm text-muted-foreground mb-4">{sample.description}</p>
+              <p className="text-xs text-muted-foreground mb-4 line-clamp-2 italic">
+                "{sample.script.substring(0, 80)}..."
+              </p>
 
               <Button
                 variant="outline"
                 size="sm"
-                className={`w-full gap-2 ${
+                className={`w-full gap-2 text-xs ${
                   playingId === sample.id 
                     ? 'bg-primary text-primary-foreground border-primary' 
                     : ''
                 }`}
-                disabled={loadingId === sample.id}
               >
-                {loadingId === sample.id ? (
+                {playingId === sample.id ? (
                   <>
-                    <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                    Loading...
-                  </>
-                ) : playingId === sample.id ? (
-                  <>
-                    <Pause className="w-4 h-4" />
-                    Playing...
+                    <Pause className="w-3.5 h-3.5" />
+                    Stop
                   </>
                 ) : (
                   <>
-                    <Play className="w-4 h-4" />
+                    <Play className="w-3.5 h-3.5" />
                     Listen
                   </>
                 )}
@@ -172,10 +266,13 @@ export function VoiceSamples() {
         </div>
 
         {/* Custom voice note */}
-        <div className="text-center mt-8">
-          <p className="text-muted-foreground text-sm">
-            🎙️ <span className="text-foreground font-medium">Don't see what you need?</span> We create custom voices tailored to your brand.
-          </p>
+        <div className="text-center mt-10">
+          <div className="inline-flex items-center gap-3 bg-card/50 border border-border/50 rounded-full px-6 py-3">
+            <Volume2 className="w-5 h-5 text-primary" />
+            <p className="text-muted-foreground text-sm">
+              <span className="text-foreground font-medium">Custom voices available!</span> We'll create a unique AI voice tailored to your brand.
+            </p>
+          </div>
         </div>
       </div>
     </section>
