@@ -1,7 +1,7 @@
 import { ArrowRight, Phone, PhoneOff, PhoneCall, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useEffect, useRef, useState } from 'react';
-import heroImage from '@/assets/ai-receptionist-hero.jpg';
+import heroImage from '@/assets/hero-ai-avatar.jpg';
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);

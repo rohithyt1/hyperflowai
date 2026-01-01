@@ -52,47 +52,20 @@ export function CursorFollower() {
 
   return (
     <>
-      {/* Main cursor - pointy triangle */}
+      {/* Glow effect only - follows cursor */}
       <div
-        className="fixed pointer-events-none z-[9999] transition-transform duration-100 ease-out hidden md:block"
-        style={{
-          left: position.x,
-          top: position.y,
-          transform: `translate(-4px, -4px) scale(${isHovering ? 1.2 : 1})`,
-          opacity: isVisible ? 1 : 0,
-        }}
-      >
-        {/* Pointy cursor shape */}
-        <svg 
-          width="24" 
-          height="28" 
-          viewBox="0 0 24 28" 
-          fill="none"
-          className="drop-shadow-[0_0_8px_hsl(217,91%,60%)]"
-        >
-          <path 
-            d="M4 2L4 22L9 17L14 26L17 24.5L12 15.5L20 15.5L4 2Z" 
-            fill={isHovering ? "hsl(217, 91%, 60%)" : "hsl(217, 91%, 70%)"}
-            stroke="hsl(0, 0%, 100%)"
-            strokeWidth="1.5"
-          />
-        </svg>
-      </div>
-      
-      {/* Glow trail effect */}
-      <div
-        className="fixed pointer-events-none z-[9998] transition-all duration-200 ease-out hidden md:block"
+        className="fixed pointer-events-none z-[9998] transition-all duration-150 ease-out hidden md:block"
         style={{
           left: position.x,
           top: position.y,
           transform: 'translate(-50%, -50%)',
-          opacity: isVisible ? 0.4 : 0,
+          opacity: isVisible ? 0.6 : 0,
         }}
       >
         <div 
-          className="w-20 h-20 rounded-full blur-xl"
+          className={`rounded-full blur-xl transition-all duration-200 ${isHovering ? 'w-32 h-32' : 'w-24 h-24'}`}
           style={{
-            background: `radial-gradient(circle, hsl(217 91% 60% / 0.4) 0%, transparent 70%)`,
+            background: `radial-gradient(circle, hsl(217 91% 60% / 0.5) 0%, hsl(189 100% 56% / 0.2) 40%, transparent 70%)`,
           }}
         />
       </div>
