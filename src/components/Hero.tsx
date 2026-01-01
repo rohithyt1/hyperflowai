@@ -1,115 +1,195 @@
-import { ArrowRight, Bot, MessageSquare, Calendar, Zap } from 'lucide-react';
+import { ArrowRight, Bot, Sparkles, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import heroImage from '@/assets/hero-ai-robot.jpg';
-import elements3d from '@/assets/3d-elements.jpg';
+import { useEffect, useRef, useState } from 'react';
 
 export function Hero() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      setMousePosition({
+        x: (e.clientX - rect.left) / rect.width,
+        y: (e.clientY - rect.top) / rect.height,
+      });
+    };
+
+    const container = containerRef.current;
+    container?.addEventListener('mousemove', handleMouseMove);
+    return () => container?.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 lg:pt-0">
-      {/* Background Elements */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-card/30"></div>
+    <section 
+      ref={containerRef}
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 lg:pt-0"
+    >
+      {/* Animated gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-card/30" />
       
-      {/* 3D Floating Elements - Hidden on mobile */}
-      <div className="absolute inset-0 hidden md:block">
-        <img 
-          src={elements3d} 
-          alt="3D Elements" 
-          className="absolute top-10 right-10 w-32 h-32 opacity-20 float"
+      {/* Interactive gradient that follows mouse */}
+      <div 
+        className="absolute inset-0 opacity-30 hidden md:block transition-all duration-500"
+        style={{
+          background: `radial-gradient(600px circle at ${mousePosition.x * 100}% ${mousePosition.y * 100}%, hsl(var(--primary) / 0.15), transparent 40%)`,
+        }}
+      />
+
+      {/* Floating 3D orbs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div 
+          className="absolute w-72 h-72 bg-gradient-to-br from-primary/20 to-transparent rounded-full blur-3xl"
+          style={{
+            top: '20%',
+            left: '10%',
+            transform: `translate(${mousePosition.x * 30}px, ${mousePosition.y * 30}px)`,
+            transition: 'transform 0.5s ease-out',
+          }}
         />
-        <div className="absolute top-1/4 left-10 w-16 h-16 bg-primary/20 rounded-full blur-xl pulse-glow"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-24 h-24 bg-accent/20 rounded-lg blur-xl float" style={{ animationDelay: '2s' }}></div>
+        <div 
+          className="absolute w-96 h-96 bg-gradient-to-br from-accent/15 to-transparent rounded-full blur-3xl"
+          style={{
+            bottom: '10%',
+            right: '5%',
+            transform: `translate(${-mousePosition.x * 40}px, ${-mousePosition.y * 40}px)`,
+            transition: 'transform 0.5s ease-out',
+          }}
+        />
+        <div 
+          className="absolute w-48 h-48 bg-gradient-to-br from-primary-glow/10 to-transparent rounded-full blur-2xl"
+          style={{
+            top: '60%',
+            left: '60%',
+            transform: `translate(${mousePosition.x * 20}px, ${-mousePosition.y * 20}px)`,
+            transition: 'transform 0.3s ease-out',
+          }}
+        />
       </div>
 
-      {/* Particle Grid */}
-      <div className="absolute inset-0 opacity-10">
+      {/* Grid pattern */}
+      <div className="absolute inset-0 opacity-[0.03]">
         <div className="w-full h-full" style={{
-          backgroundImage: 'radial-gradient(circle, hsl(var(--primary)) 1px, transparent 1px)',
-          backgroundSize: '50px 50px'
-        }}></div>
+          backgroundImage: `
+            linear-gradient(to right, hsl(var(--primary)) 1px, transparent 1px),
+            linear-gradient(to bottom, hsl(var(--primary)) 1px, transparent 1px)
+          `,
+          backgroundSize: '60px 60px'
+        }} />
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          
-          {/* Content */}
-          <div className="space-y-6 lg:space-y-8 text-center lg:text-left">
-            <div className="space-y-4">
-              <div className="inline-flex items-center space-x-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium">
-                <Bot className="w-4 h-4" />
-                <span>Your Tagline Here</span>
-              </div>
-              
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold leading-tight">
-                Your Main Headline{' '}
-                <span className="text-glow">Goes Here</span>
-              </h1>
-              
-              <p className="text-base sm:text-lg lg:text-xl text-muted-foreground max-w-lg mx-auto lg:mx-0">
-                Describe your value proposition here. Explain what you offer and why customers should choose you. 
-                Keep it concise and compelling.
-              </p>
-            </div>
+        <div className="max-w-4xl mx-auto text-center">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6 backdrop-blur-sm animate-fade-in">
+            <Sparkles className="w-4 h-4" />
+            <span>AI-Powered Business Automation</span>
+          </div>
 
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Button 
-                className="btn-hero group"
-                onClick={() => window.location.href = '/contact'}
-              >
-                Primary Action
-                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-              </Button>
-              <Button className="btn-outline-glow group">
-                Secondary Action
-                <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </div>
+          {/* Main headline */}
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
+            Your Business,{' '}
+            <span className="text-glow">Never Offline</span>
+          </h1>
 
-            {/* Quick Stats */}
-            <div className="grid grid-cols-3 gap-3 sm:gap-6 pt-6 lg:pt-8">
-              <div className="text-center">
-                <div className="text-xl sm:text-2xl font-bold text-primary">Stat 1</div>
-                <div className="text-xs sm:text-sm text-muted-foreground">Label</div>
-              </div>
-              <div className="text-center">
-                <div className="text-xl sm:text-2xl font-bold text-primary">Stat 2</div>
-                <div className="text-xs sm:text-sm text-muted-foreground">Label</div>
-              </div>
-              <div className="text-center">
-                <div className="text-xl sm:text-2xl font-bold text-primary">Stat 3</div>
-                <div className="text-xs sm:text-sm text-muted-foreground">Label</div>
-              </div>
+          {/* Subtitle */}
+          <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+            AI agents that answer calls, book appointments, and close leads 24/7 — 
+            so you can focus on what you do best.
+          </p>
+
+          {/* CTA buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+            <Button 
+              className="btn-hero group text-base"
+              onClick={() => window.open('https://cal.com/star-ment-yrerge/30min?overlayCalendar=true', '_blank')}
+            >
+              See It In Action
+              <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+            </Button>
+            <Button 
+              className="btn-secondary group text-base"
+              onClick={() => window.location.href = '/services'}
+            >
+              View Pricing
+            </Button>
+          </div>
+
+          {/* Social proof */}
+          <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 animate-fade-in" style={{ animationDelay: '0.4s' }}>
+            <div className="flex items-center gap-2">
+              <Bot className="w-5 h-5 text-primary" />
+              <span className="text-sm text-muted-foreground">
+                <span className="text-foreground font-semibold">500+</span> businesses automated
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Zap className="w-5 h-5 text-accent" />
+              <span className="text-sm text-muted-foreground">
+                <span className="text-foreground font-semibold">1M+</span> conversations handled
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-primary-glow" />
+              <span className="text-sm text-muted-foreground">
+                <span className="text-foreground font-semibold">99.9%</span> uptime
+              </span>
             </div>
           </div>
 
-          {/* Hero Image with 3D Effect */}
-          <div className="relative mt-8 lg:mt-0">
-            <div className="relative z-10">
-              <img 
-                src={heroImage} 
-                alt="Hero Image" 
-                className="w-full h-auto rounded-2xl shadow-2xl pulse-glow"
-              />
+          {/* Floating feature cards */}
+          <div className="hidden lg:block">
+            <div 
+              className="absolute top-1/4 left-8 xl:left-16 card-glow p-4 float backdrop-blur-sm"
+              style={{ animationDelay: '0s' }}
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center">
+                  <Bot className="w-5 h-5 text-primary" />
+                </div>
+                <div className="text-left">
+                  <div className="font-semibold text-sm">AI Calls</div>
+                  <div className="text-xs text-muted-foreground">24/7 Coverage</div>
+                </div>
+              </div>
             </div>
             
-            {/* Floating Service Icons - Hidden on small screens, repositioned for medium */}
-            <div className="hidden md:block absolute -top-4 lg:-top-8 left-0 lg:-left-8 bg-card/80 backdrop-blur-sm border border-border/50 rounded-xl p-3 lg:p-4 float">
-              <MessageSquare className="w-6 h-6 lg:w-8 lg:h-8 text-primary" />
-              <div className="mt-1 lg:mt-2 text-xs lg:text-sm font-medium">Feature 1</div>
+            <div 
+              className="absolute top-1/3 right-8 xl:right-16 card-glow p-4 float backdrop-blur-sm"
+              style={{ animationDelay: '2s' }}
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-accent/20 rounded-lg flex items-center justify-center">
+                  <Zap className="w-5 h-5 text-accent" />
+                </div>
+                <div className="text-left">
+                  <div className="font-semibold text-sm">Instant Response</div>
+                  <div className="text-xs text-muted-foreground">&lt;3 seconds</div>
+                </div>
+              </div>
             </div>
-            
-            <div className="hidden md:block absolute -bottom-4 lg:-bottom-8 right-0 lg:-right-8 bg-card/80 backdrop-blur-sm border border-border/50 rounded-xl p-3 lg:p-4 float" style={{ animationDelay: '1s' }}>
-              <Calendar className="w-6 h-6 lg:w-8 lg:h-8 text-accent" />
-              <div className="mt-1 lg:mt-2 text-xs lg:text-sm font-medium">Feature 2</div>
-            </div>
-            
-            <div className="hidden lg:block absolute top-1/2 -right-12 bg-card/80 backdrop-blur-sm border border-border/50 rounded-xl p-4 float" style={{ animationDelay: '3s' }}>
-              <Zap className="w-8 h-8 text-primary-glow" />
-              <div className="mt-2 text-sm font-medium">Feature 3</div>
+
+            <div 
+              className="absolute bottom-1/4 left-12 xl:left-24 card-glow p-4 float backdrop-blur-sm"
+              style={{ animationDelay: '1s' }}
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-primary-glow/20 rounded-lg flex items-center justify-center">
+                  <Sparkles className="w-5 h-5 text-primary-glow" />
+                </div>
+                <div className="text-left">
+                  <div className="font-semibold text-sm">Smart Booking</div>
+                  <div className="text-xs text-muted-foreground">Auto-schedule</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Bottom gradient fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
     </section>
   );
 }

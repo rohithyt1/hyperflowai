@@ -1,25 +1,23 @@
 import { Layout } from '@/components/Layout';
 import { Hero } from '@/components/Hero';
+import { OfferTimer } from '@/components/OfferTimer';
+import { ProblemSolution } from '@/components/ProblemSolution';
 import { Services } from '@/components/Services';
-import { WorkflowDiagram } from '@/components/WorkflowDiagram';
-import { Benefits } from '@/components/Benefits';
-import { StatsCounter } from '@/components/StatsCounter';
+import { ValueCapture } from '@/components/ValueCapture';
 import { TestimonialsCarousel } from '@/components/TestimonialsCarousel';
-import { CompanyBanner } from '@/components/CompanyBanner';
-import { FAQ } from '@/components/FAQ';
+import { FAQDashboard } from '@/components/FAQDashboard';
 import { Chatbot } from '@/components/Chatbot';
 
 const Index = () => {
   return (
     <Layout>
       <Hero />
+      <OfferTimer />
+      <ProblemSolution />
       <Services />
-      <WorkflowDiagram />
-      <Benefits />
-      <StatsCounter />
+      <ValueCapture />
       <TestimonialsCarousel />
-      <CompanyBanner />
-      <FAQ />
+      <FAQDashboard />
       <Chatbot />
     </Layout>
   );
