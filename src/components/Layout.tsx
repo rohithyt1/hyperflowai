@@ -23,7 +23,10 @@ export function Layout({ children }: LayoutProps) {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Global space background layer (so it shows on every page) */}
+      <div className="space-backdrop fixed inset-0 -z-10" aria-hidden="true" />
+
       {/* Cursor Follower - Visible on all pages */}
       <CursorFollower />
       
