@@ -125,20 +125,20 @@ export default function AboutPage() {
                 <div className="card-glow p-8">
                   <div className="grid grid-cols-2 gap-6 text-center">
                     <div>
-                      <div className="text-3xl font-bold text-primary mb-2">500+</div>
-                      <div className="text-sm text-muted-foreground">Happy Clients</div>
+                      <div className="text-3xl font-bold text-primary mb-2">47</div>
+                      <div className="text-sm text-muted-foreground">Active Clients</div>
                     </div>
                     <div>
-                      <div className="text-3xl font-bold text-primary mb-2">1M+</div>
-                      <div className="text-sm text-muted-foreground">Conversations</div>
+                      <div className="text-3xl font-bold text-primary mb-2">12K+</div>
+                      <div className="text-sm text-muted-foreground">Calls Handled</div>
                     </div>
                     <div>
                       <div className="text-3xl font-bold text-primary mb-2">99.9%</div>
                       <div className="text-sm text-muted-foreground">Uptime</div>
                     </div>
                     <div>
-                      <div className="text-3xl font-bold text-primary mb-2">50+</div>
-                      <div className="text-sm text-muted-foreground">Countries</div>
+                      <div className="text-3xl font-bold text-primary mb-2">24/7</div>
+                      <div className="text-sm text-muted-foreground">Availability</div>
                     </div>
                   </div>
                 </div>
