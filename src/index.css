@@ -106,43 +106,29 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    background-color: hsl(222 47% 4%);
-    position: relative;
+    background-color: hsl(var(--background));
   }
 
-  body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
-    pointer-events: none;
-    background-image: 
-      /* White stars - bright and visible */
-      radial-gradient(2px 2px at 50px 50px, hsl(0 0% 100%), transparent),
-      radial-gradient(2px 2px at 150px 80px, hsl(0 0% 100%), transparent),
-      radial-gradient(1.5px 1.5px at 250px 120px, hsl(0 0% 95%), transparent),
-      radial-gradient(2px 2px at 100px 180px, hsl(0 0% 100%), transparent),
-      radial-gradient(1px 1px at 300px 60px, hsl(0 0% 90%), transparent),
-      radial-gradient(2.5px 2.5px at 400px 150px, hsl(0 0% 100%), transparent),
-      radial-gradient(1.5px 1.5px at 180px 220px, hsl(0 0% 95%), transparent),
-      radial-gradient(2px 2px at 350px 30px, hsl(0 0% 100%), transparent),
-      radial-gradient(1px 1px at 450px 200px, hsl(0 0% 90%), transparent),
-      radial-gradient(2px 2px at 80px 250px, hsl(0 0% 100%), transparent),
-      /* Hematite/silver metallic stars */
-      radial-gradient(2px 2px at 220px 90px, hsl(220 20% 75%), transparent),
-      radial-gradient(2.5px 2.5px at 380px 180px, hsl(215 25% 70%), transparent),
-      radial-gradient(1.5px 1.5px at 120px 150px, hsl(225 15% 80%), transparent),
-      radial-gradient(2px 2px at 480px 100px, hsl(210 20% 72%), transparent),
-      radial-gradient(1.5px 1.5px at 280px 240px, hsl(220 18% 68%), transparent),
-      radial-gradient(2px 2px at 420px 70px, hsl(218 22% 75%), transparent),
+  /* Fixed starfield layer (used by Layout so it shows on every page) */
+  .space-backdrop {
+    background-color: hsl(var(--background));
+    background-image:
+      /* White stars */
+      radial-gradient(2px 2px at 50px 50px, hsl(0 0% 100% / 0.95), transparent),
+      radial-gradient(2px 2px at 150px 80px, hsl(0 0% 100% / 0.9), transparent),
+      radial-gradient(1.5px 1.5px at 250px 120px, hsl(0 0% 100% / 0.8), transparent),
+      radial-gradient(2.5px 2.5px at 420px 70px, hsl(0 0% 100% / 0.95), transparent),
+      radial-gradient(1px 1px at 300px 60px, hsl(0 0% 100% / 0.7), transparent),
+      radial-gradient(2px 2px at 80px 250px, hsl(0 0% 100% / 0.9), transparent),
+      /* Hematite / metallic stars */
+      radial-gradient(2px 2px at 220px 90px, hsl(220 18% 72% / 0.9), transparent),
+      radial-gradient(2.5px 2.5px at 380px 180px, hsl(215 22% 68% / 0.85), transparent),
+      radial-gradient(1.5px 1.5px at 120px 150px, hsl(225 14% 78% / 0.85), transparent),
       /* Blue nebula glows */
-      radial-gradient(ellipse 600px 400px at 15% 25%, hsl(217 91% 60% / 0.08), transparent),
-      radial-gradient(ellipse 500px 350px at 85% 65%, hsl(189 100% 56% / 0.05), transparent),
-      radial-gradient(ellipse 400px 300px at 50% 80%, hsl(224 50% 50% / 0.04), transparent);
-    background-size: 500px 300px;
+      radial-gradient(ellipse 700px 500px at 15% 25%, hsl(217 91% 60% / 0.08), transparent 60%),
+      radial-gradient(ellipse 600px 450px at 85% 65%, hsl(189 100% 56% / 0.05), transparent 60%),
+      radial-gradient(ellipse 500px 380px at 50% 80%, hsl(224 50% 50% / 0.04), transparent 60%);
+    background-size: 520px 320px;
     background-repeat: repeat;
   }
 }
