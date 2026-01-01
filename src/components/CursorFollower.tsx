@@ -52,41 +52,49 @@ export function CursorFollower() {
 
   return (
     <>
-      {/* Main cursor glow */}
+      {/* Main cursor - pointy triangle */}
       <div
-        className="fixed pointer-events-none z-[9999] transition-transform duration-150 ease-out hidden md:block"
+        className="fixed pointer-events-none z-[9999] transition-transform duration-100 ease-out hidden md:block"
         style={{
           left: position.x,
           top: position.y,
-          transform: `translate(-50%, -50%) scale(${isHovering ? 1.5 : 1})`,
+          transform: `translate(-4px, -4px) scale(${isHovering ? 1.2 : 1})`,
           opacity: isVisible ? 1 : 0,
         }}
       >
-        <div 
-          className={`rounded-full transition-all duration-300 ${
-            isHovering 
-              ? 'w-12 h-12 bg-primary/20 border-2 border-primary' 
-              : 'w-6 h-6 bg-primary/30'
-          }`}
-          style={{
-            boxShadow: isHovering 
-              ? '0 0 30px hsl(var(--primary) / 0.5)' 
-              : '0 0 20px hsl(var(--primary) / 0.3)',
-          }}
-        />
+        {/* Pointy cursor shape */}
+        <svg 
+          width="24" 
+          height="28" 
+          viewBox="0 0 24 28" 
+          fill="none"
+          className="drop-shadow-[0_0_8px_hsl(217,91%,60%)]"
+        >
+          <path 
+            d="M4 2L4 22L9 17L14 26L17 24.5L12 15.5L20 15.5L4 2Z" 
+            fill={isHovering ? "hsl(217, 91%, 60%)" : "hsl(217, 91%, 70%)"}
+            stroke="hsl(0, 0%, 100%)"
+            strokeWidth="1.5"
+          />
+        </svg>
       </div>
       
-      {/* Trail effect */}
+      {/* Glow trail effect */}
       <div
-        className="fixed pointer-events-none z-[9998] transition-all duration-300 ease-out hidden md:block"
+        className="fixed pointer-events-none z-[9998] transition-all duration-200 ease-out hidden md:block"
         style={{
           left: position.x,
           top: position.y,
           transform: 'translate(-50%, -50%)',
-          opacity: isVisible ? 0.3 : 0,
+          opacity: isVisible ? 0.4 : 0,
         }}
       >
-        <div className="w-32 h-32 rounded-full bg-gradient-radial from-primary/20 to-transparent blur-xl" />
+        <div 
+          className="w-20 h-20 rounded-full blur-xl"
+          style={{
+            background: `radial-gradient(circle, hsl(217 91% 60% / 0.4) 0%, transparent 70%)`,
+          }}
+        />
       </div>
     </>
   );
