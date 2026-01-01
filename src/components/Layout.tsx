@@ -1,9 +1,8 @@
 import { ReactNode } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Bot, Menu, X, Twitter, Linkedin, Instagram, Youtube, Mail, Phone } from 'lucide-react';
+import { Bot, Menu, X, Linkedin, Instagram, Mail, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
-import { VoiceChatbot } from './VoiceChatbot';
 
 interface LayoutProps {
   children: ReactNode;
@@ -121,17 +120,16 @@ export function Layout({ children }: LayoutProps) {
               
               {/* Social Links */}
               <div className="flex items-center gap-4">
-                <a href="https://twitter.com/hyperflow" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-card border border-border/50 rounded-lg flex items-center justify-center hover:bg-primary/10 hover:border-primary/50 transition-all">
-                  <Twitter className="w-5 h-5 text-muted-foreground hover:text-primary" />
+                <a href="https://x.com/hypergene0" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-card border border-border/50 rounded-lg flex items-center justify-center hover:bg-primary/10 hover:border-primary/50 transition-all">
+                  <svg className="w-5 h-5 text-muted-foreground" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                  </svg>
                 </a>
-                <a href="https://linkedin.com/company/hyperflow" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-card border border-border/50 rounded-lg flex items-center justify-center hover:bg-primary/10 hover:border-primary/50 transition-all">
+                <a href="https://www.linkedin.com/in/hyper-flow-610a4330b/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-card border border-border/50 rounded-lg flex items-center justify-center hover:bg-primary/10 hover:border-primary/50 transition-all">
                   <Linkedin className="w-5 h-5 text-muted-foreground hover:text-primary" />
                 </a>
                 <a href="https://instagram.com/hyperflow" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-card border border-border/50 rounded-lg flex items-center justify-center hover:bg-primary/10 hover:border-primary/50 transition-all">
                   <Instagram className="w-5 h-5 text-muted-foreground hover:text-primary" />
-                </a>
-                <a href="https://youtube.com/@hyperflow" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-card border border-border/50 rounded-lg flex items-center justify-center hover:bg-primary/10 hover:border-primary/50 transition-all">
-                  <Youtube className="w-5 h-5 text-muted-foreground hover:text-primary" />
                 </a>
               </div>
             </div>
@@ -153,11 +151,11 @@ export function Layout({ children }: LayoutProps) {
               <ul className="space-y-3 text-muted-foreground">
                 <li className="flex items-center gap-2">
                   <Mail className="w-4 h-4 text-primary" />
-                  <a href="mailto:hello@hyperflow.com" className="hover:text-primary transition-colors">hello@hyperflow.com</a>
+                  <a href="mailto:rohan@hyperflow.space" className="hover:text-primary transition-colors">rohan@hyperflow.space</a>
                 </li>
                 <li className="flex items-center gap-2">
                   <Phone className="w-4 h-4 text-primary" />
-                  <a href="tel:+1234567890" className="hover:text-primary transition-colors">+1 (234) 567-890</a>
+                  <a href="tel:+917483815143" className="hover:text-primary transition-colors">+91 7483815143</a>
                 </li>
               </ul>
               <div className="mt-4 space-y-2 text-sm text-muted-foreground">
@@ -172,8 +170,6 @@ export function Layout({ children }: LayoutProps) {
           </div>
         </div>
       </footer>
-      
-      <VoiceChatbot />
     </div>
   );
 }
