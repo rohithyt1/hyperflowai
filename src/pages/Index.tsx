@@ -10,7 +10,6 @@ import { TestimonialsCarousel } from '@/components/TestimonialsCarousel';
 import { PaymentGateway } from '@/components/PaymentGateway';
 import { SimpleFAQ } from '@/components/SimpleFAQ';
 import { FinalCTA } from '@/components/FinalCTA';
-import { Chatbot } from '@/components/Chatbot';
 
 const Index = () => {
   return (
@@ -26,7 +25,6 @@ const Index = () => {
       <SimpleFAQ />
       <FinalCTA />
       <OfferTimer />
-      <Chatbot />
     </Layout>
   );
 };

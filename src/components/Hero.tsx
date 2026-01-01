@@ -6,7 +6,7 @@ import heroImage from '@/assets/ai-receptionist-hero.jpg';
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 });
-  const [callsAnswered, setCallsAnswered] = useState(847);
+  const [callsAnswered, setCallsAnswered] = useState(312);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -25,8 +25,12 @@ export function Hero() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCallsAnswered(prev => prev + Math.floor(Math.random() * 3));
-    }, 5000);
+      setCallsAnswered(prev => {
+        // Keep it realistic, max 500
+        if (prev >= 480) return 312 + Math.floor(Math.random() * 50);
+        return prev + Math.floor(Math.random() * 2);
+      });
+    }, 8000);
     return () => clearInterval(interval);
   }, []);
 

@@ -1,32 +1,86 @@
 import { useState } from 'react';
-import { CheckCircle, ArrowRight, Zap, Phone, Star, Shield } from 'lucide-react';
+import { Check, Zap, Crown, Rocket, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
 
-export function PaymentGateway() {
-  const [isProcessing, setIsProcessing] = useState(false);
+const plans = [
+  {
+    name: 'Alpha',
+    subtitle: 'Try it out',
+    price: '$19',
+    period: '7 days',
+    description: 'Perfect to test the waters',
+    icon: Zap,
+    features: [
+      'AI Receptionist Active',
+      'Up to 50 calls handled',
+      'Basic appointment booking',
+      'Email notifications',
+      'Standard voice',
+    ],
+    cta: 'Start Trial',
+    popular: false,
+  },
+  {
+    name: 'Beta',
+    subtitle: 'Most Popular',
+    price: '$249',
+    period: '/month',
+    description: 'For growing businesses',
+    icon: Crown,
+    features: [
+      'Unlimited calls handled',
+      'Custom AI voice for your brand',
+      'Calendar integration',
+      'CRM integration',
+      'SMS notifications',
+      'Priority support',
+      'Call analytics dashboard',
+    ],
+    cta: 'Get Started',
+    popular: true,
+  },
+  {
+    name: 'Sigma',
+    subtitle: 'Enterprise',
+    price: 'Custom',
+    period: '',
+    description: 'For large organizations',
+    icon: Rocket,
+    features: [
+      'Everything in Beta',
+      'Multiple locations',
+      'Dedicated account manager',
+      'Custom integrations',
+      'SLA guarantee',
+      'White-label options',
+      'API access',
+    ],
+    cta: 'Contact Us',
+    popular: false,
+  },
+];
 
-  const handlePayment = async () => {
-    setIsProcessing(true);
+export function PaymentGateway() {
+  const [isProcessing, setIsProcessing] = useState<string | null>(null);
+
+  const handlePlanClick = async (planName: string) => {
+    setIsProcessing(planName);
 
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise(resolve => setTimeout(resolve, 500));
       
       toast({
-        title: "Redirecting to checkout",
-        description: "You'll be redirected to our secure payment portal.",
+        title: "Redirecting...",
+        description: planName === 'Sigma' 
+          ? "Opening booking calendar for consultation." 
+          : "You'll be redirected to complete your order.",
       });
 
-      // Will be replaced with Stripe
+      // Placeholder - will be replaced with Stripe
       window.open('https://cal.com/star-ment-yrerge/30min?overlayCalendar=true', '_blank');
-    } catch (error) {
-      toast({
-        title: "Something went wrong",
-        description: "Please try again or contact support.",
-        variant: "destructive",
-      });
     } finally {
-      setIsProcessing(false);
+      setIsProcessing(null);
     }
   };
 
@@ -34,109 +88,82 @@ export function PaymentGateway() {
     <section id="pricing" className="py-16 md:py-24 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-card/20 to-background" />
-
+      
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         {/* Header */}
-        <div className="text-center mb-12 md:mb-16">
+        <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-            Simple <span className="text-glow">Pricing</span>
+            Simple, <span className="text-glow">Transparent</span> Pricing
           </h2>
           <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-            One service. One price. No hidden fees.
+            Choose the plan that fits your business. No hidden fees.
           </p>
         </div>
 
-        {/* Single focused plan */}
-        <div className="max-w-lg mx-auto">
-          <div className="relative card-glow p-6 sm:p-8 border-primary/50 ring-1 ring-primary/20">
-            {/* Badge */}
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-              <div className="flex items-center gap-1.5 bg-primary text-primary-foreground px-4 py-1.5 rounded-full text-sm font-semibold">
-                <Star className="w-4 h-4 fill-current" />
-                Limited Time Offer
-              </div>
-            </div>
-
-            {/* Header */}
-            <div className="text-center pt-4 mb-6">
-              <div className="w-16 h-16 bg-primary/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <Phone className="w-8 h-8 text-primary" />
-              </div>
-              <h3 className="text-2xl font-bold mb-2">AI Receptionist</h3>
-              <p className="text-muted-foreground">Everything you need to never miss a call</p>
-            </div>
-
-            {/* Trial Price */}
-            <div className="text-center py-6 border-y border-border/50">
-              <div className="mb-2">
-                <span className="bg-accent/20 text-accent px-3 py-1 rounded-full text-sm font-semibold">
-                  7-Day Trial
-                </span>
-              </div>
-              <div className="flex items-baseline justify-center gap-1">
-                <span className="text-5xl sm:text-6xl font-bold text-primary">$19</span>
-              </div>
-              <p className="text-sm text-muted-foreground mt-2">Then $297/month • Cancel anytime</p>
-            </div>
-
-            {/* Features */}
-            <ul className="space-y-4 py-6">
-              {[
-                'Unlimited incoming calls',
-                'AI answers in your brand voice',
-                'Books appointments automatically',
-                'Syncs with your calendar',
-                'SMS follow-ups included',
-                'Call recordings & transcripts',
-                'Works 24/7/365',
-                'Setup done for you',
-              ].map((feature, index) => (
-                <li key={index} className="flex items-center gap-3">
-                  <div className="w-5 h-5 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
-                    <CheckCircle className="w-3.5 h-3.5 text-primary" />
-                  </div>
-                  <span>{feature}</span>
-                </li>
-              ))}
-            </ul>
-
-            {/* CTA */}
-            <Button
-              className="w-full btn-hero text-lg py-6 group"
-              onClick={handlePayment}
-              disabled={isProcessing}
+        {/* Pricing Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          {plans.map((plan) => (
+            <div
+              key={plan.name}
+              className={`relative card-glow p-6 flex flex-col ${
+                plan.popular 
+                  ? 'border-primary/50 bg-gradient-to-b from-primary/10 to-transparent md:scale-105 z-10' 
+                  : ''
+              }`}
             >
-              {isProcessing ? (
-                'Processing...'
-              ) : (
-                <>
-                  Start 7-Day Trial — $19
-                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-                </>
+              {plan.popular && (
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                  <span className="bg-primary text-primary-foreground text-xs font-bold px-3 py-1 rounded-full">
+                    MOST POPULAR
+                  </span>
+                </div>
               )}
-            </Button>
 
-            <div className="flex items-center justify-center gap-2 mt-4 text-sm text-muted-foreground">
-              <Shield className="w-4 h-4 text-primary" />
-              <span>Secure payment • Money-back guarantee</span>
+              <div className="text-center mb-6 pt-2">
+                <div className={`w-12 h-12 mx-auto mb-4 rounded-xl flex items-center justify-center ${
+                  plan.popular ? 'bg-primary/20' : 'bg-card border border-border/50'
+                }`}>
+                  <plan.icon className={`w-6 h-6 ${plan.popular ? 'text-primary' : 'text-muted-foreground'}`} />
+                </div>
+                <h3 className="text-xl font-bold">{plan.name}</h3>
+                <p className="text-sm text-muted-foreground">{plan.subtitle}</p>
+              </div>
+
+              <div className="text-center mb-6">
+                <div className="flex items-baseline justify-center gap-1">
+                  <span className="text-4xl font-bold">{plan.price}</span>
+                  {plan.period && (
+                    <span className="text-muted-foreground">{plan.period}</span>
+                  )}
+                </div>
+                <p className="text-sm text-muted-foreground mt-1">{plan.description}</p>
+              </div>
+
+              <ul className="space-y-3 mb-8 flex-1">
+                {plan.features.map((feature, index) => (
+                  <li key={index} className="flex items-start gap-2 text-sm">
+                    <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <Button
+                className={`w-full ${plan.popular ? 'btn-hero' : ''}`}
+                variant={plan.popular ? 'default' : 'outline'}
+                onClick={() => handlePlanClick(plan.name)}
+                disabled={isProcessing === plan.name}
+              >
+                {isProcessing === plan.name ? 'Processing...' : plan.cta}
+              </Button>
             </div>
-          </div>
+          ))}
         </div>
 
-        {/* Trust badges */}
-        <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 mt-12 text-muted-foreground text-sm">
-          <div className="flex items-center gap-2">
-            <Zap className="w-4 h-4 text-primary" />
-            <span>Setup in 24 hours</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <CheckCircle className="w-4 h-4 text-primary" />
-            <span>No contracts</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Phone className="w-4 h-4 text-primary" />
-            <span>Keep your number</span>
-          </div>
+        {/* Money back guarantee */}
+        <div className="flex items-center justify-center gap-2 mt-12 text-muted-foreground text-sm">
+          <Shield className="w-4 h-4 text-primary" />
+          <span><span className="text-foreground font-medium">30-day money-back guarantee</span> • No questions asked</span>
         </div>
       </div>
     </section>

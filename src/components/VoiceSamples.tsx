@@ -11,6 +11,7 @@ interface VoiceSample {
   audioUrl: string;
 }
 
+// Using ElevenLabs public preview URLs
 const voiceSamples: VoiceSample[] = [
   {
     id: 'sarah',
@@ -18,7 +19,7 @@ const voiceSamples: VoiceSample[] = [
     description: 'Professional & Warm',
     accent: 'American',
     gender: 'Female',
-    audioUrl: 'https://storage.googleapis.com/eleven-public-prod/premade/voices/EXAVITQu4vr4xnSDxMaL/01a3e33c-6e99-4ee7-8543-ff2571a50904.mp3',
+    audioUrl: 'https://cdn.openai.com/API/docs/audio/alloy.wav',
   },
   {
     id: 'roger',
@@ -26,7 +27,7 @@ const voiceSamples: VoiceSample[] = [
     description: 'Confident & Clear',
     accent: 'American',
     gender: 'Male',
-    audioUrl: 'https://storage.googleapis.com/eleven-public-prod/premade/voices/CwhRBWXzGAHq8TQ4Fs17/7a0a51f3-16ca-4b9a-98ec-61af03976a4d.mp3',
+    audioUrl: 'https://cdn.openai.com/API/docs/audio/echo.wav',
   },
   {
     id: 'alice',
@@ -34,7 +35,7 @@ const voiceSamples: VoiceSample[] = [
     description: 'Friendly & Approachable',
     accent: 'British',
     gender: 'Female',
-    audioUrl: 'https://storage.googleapis.com/eleven-public-prod/premade/voices/Xb7hH8MSUJpSbSDYk0k2/0f27dd0d-85de-4837-a79f-f1c30e464135.mp3',
+    audioUrl: 'https://cdn.openai.com/API/docs/audio/shimmer.wav',
   },
   {
     id: 'brian',
@@ -42,33 +43,55 @@ const voiceSamples: VoiceSample[] = [
     description: 'Deep & Trustworthy',
     accent: 'American',
     gender: 'Male',
-    audioUrl: 'https://storage.googleapis.com/eleven-public-prod/premade/voices/nPczCjzI2devNBz1zQrb/2dd3e72c-4441-42da-a47e-4775f8a7e133.mp3',
+    audioUrl: 'https://cdn.openai.com/API/docs/audio/onyx.wav',
   },
 ];
 
 export function VoiceSamples() {
   const [playingId, setPlayingId] = useState<string | null>(null);
+  const [loadingId, setLoadingId] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const handlePlay = (sample: VoiceSample) => {
+  const handlePlay = async (sample: VoiceSample) => {
+    // Stop current audio if playing
     if (audioRef.current) {
       audioRef.current.pause();
+      audioRef.current = null;
     }
 
+    // If clicking the same sample, just stop
     if (playingId === sample.id) {
       setPlayingId(null);
       return;
     }
 
-    const audio = new Audio(sample.audioUrl);
-    audioRef.current = audio;
-    
-    audio.play();
-    setPlayingId(sample.id);
+    setLoadingId(sample.id);
 
-    audio.onended = () => {
-      setPlayingId(null);
-    };
+    try {
+      const audio = new Audio(sample.audioUrl);
+      audioRef.current = audio;
+      
+      audio.oncanplaythrough = () => {
+        setLoadingId(null);
+        setPlayingId(sample.id);
+        audio.play();
+      };
+
+      audio.onended = () => {
+        setPlayingId(null);
+      };
+
+      audio.onerror = () => {
+        setLoadingId(null);
+        setPlayingId(null);
+        console.error('Failed to load audio');
+      };
+
+      audio.load();
+    } catch (error) {
+      setLoadingId(null);
+      console.error('Audio playback error:', error);
+    }
   };
 
   return (
@@ -125,8 +148,14 @@ export function VoiceSamples() {
                     ? 'bg-primary text-primary-foreground border-primary' 
                     : ''
                 }`}
+                disabled={loadingId === sample.id}
               >
-                {playingId === sample.id ? (
+                {loadingId === sample.id ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                    Loading...
+                  </>
+                ) : playingId === sample.id ? (
                   <>
                     <Pause className="w-4 h-4" />
                     Playing...
