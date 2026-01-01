@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Bot, Menu, X, Linkedin, Instagram, Mail, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
+import { CursorFollower } from './CursorFollower';
 
 interface LayoutProps {
   children: ReactNode;
@@ -22,7 +23,10 @@ export function Layout({ children }: LayoutProps) {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background relative overflow-hidden">
+      {/* Cursor Follower - Visible on all pages */}
+      <CursorFollower />
+      
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
         <div className="container mx-auto px-6 py-4">
