@@ -1,81 +1,61 @@
 import { Layout } from '@/components/Layout';
 import { Bot, Users, Target, Award, Lightbulb, Shield } from 'lucide-react';
-
 export default function AboutPage() {
-  const team = [
-    {
-      name: "Rohan",
-      position: "CEO",
-      bio: "Visionary leader driving AI innovation and business growth strategies.",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face"
-    },
-    {
-      name: "Sohail",
-      position: "Partner",
-      bio: "Strategic business development and partnership expert focused on scaling operations.",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face"
-    },
-    {
-      name: "Shrwyansh",
-      position: "Manager",
-      bio: "Operations and project management specialist ensuring seamless service delivery.",
-      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&h=300&fit=crop&crop=face"
-    }
-  ];
-
-  const values = [
-    {
-      icon: Target,
-      title: "Customer-Centric",
-      description: "Every solution we build starts with understanding your unique business needs and challenges."
-    },
-    {
-      icon: Lightbulb,
-      title: "Innovation",
-      description: "We stay at the forefront of AI technology to deliver cutting-edge solutions that drive results."
-    },
-    {
-      icon: Shield,
-      title: "Security First",
-      description: "Enterprise-grade security and privacy protection are built into every AI agent we create."
-    },
-    {
-      icon: Users,
-      title: "Partnership",
-      description: "We believe in long-term partnerships, providing ongoing support and optimization for your success."
-    }
-  ];
-
-  const milestones = [
-    {
-      year: "2020",
-      title: "Company Founded",
-      description: "Started with a vision to democratize AI for businesses of all sizes."
-    },
-    {
-      year: "2021",
-      title: "First 100 Clients",
-      description: "Reached our first major milestone serving diverse industries."
-    },
-    {
-      year: "2022",
-      title: "AI Platform Launch",
-      description: "Launched our proprietary AI platform for rapid agent deployment."
-    },
-    {
-      year: "2023",
-      title: "1M+ Conversations",
-      description: "Our AI agents successfully handled over 1 million customer interactions."
-    },
-    {
-      year: "2024",
-      title: "Global Expansion",
-      description: "Expanded services worldwide with 24/7 multilingual support."
-    }
-  ];
-
-  return (
-    <Layout>
+  const team = [{
+    name: "Rohan",
+    position: "CEO",
+    bio: "Visionary leader driving AI innovation and business growth strategies.",
+    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face"
+  }, {
+    name: "Sohail",
+    position: "Partner",
+    bio: "Strategic business development and partnership expert focused on scaling operations.",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face"
+  }, {
+    name: "Shrwyansh",
+    position: "Manager",
+    bio: "Operations and project management specialist ensuring seamless service delivery.",
+    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&h=300&fit=crop&crop=face"
+  }];
+  const values = [{
+    icon: Target,
+    title: "Customer-Centric",
+    description: "Every solution we build starts with understanding your unique business needs and challenges."
+  }, {
+    icon: Lightbulb,
+    title: "Innovation",
+    description: "We stay at the forefront of AI technology to deliver cutting-edge solutions that drive results."
+  }, {
+    icon: Shield,
+    title: "Security First",
+    description: "Enterprise-grade security and privacy protection are built into every AI agent we create."
+  }, {
+    icon: Users,
+    title: "Partnership",
+    description: "We believe in long-term partnerships, providing ongoing support and optimization for your success."
+  }];
+  const milestones = [{
+    year: "2020",
+    title: "Company Founded",
+    description: "Started with a vision to democratize AI for businesses of all sizes."
+  }, {
+    year: "2021",
+    title: "First 100 Clients",
+    description: "Reached our first major milestone serving diverse industries."
+  }, {
+    year: "2022",
+    title: "AI Platform Launch",
+    description: "Launched our proprietary AI platform for rapid agent deployment."
+  }, {
+    year: "2023",
+    title: "1M+ Conversations",
+    description: "Our AI agents successfully handled over 1 million customer interactions."
+  }, {
+    year: "2024",
+    title: "Global Expansion",
+    description: "Expanded services worldwide with 24/7 multilingual support."
+  }];
+  return <Layout>
       <div className="pt-12">
         {/* Hero Section */}
         <section className="py-20 bg-gradient-to-br from-background via-background to-card/30">
@@ -125,20 +105,20 @@ export default function AboutPage() {
                 <div className="card-glow p-8">
                   <div className="grid grid-cols-2 gap-6 text-center">
                     <div>
-                      <div className="text-3xl font-bold text-primary mb-2">47</div>
-                      <div className="text-sm text-muted-foreground">Active Clients</div>
+                      <div className="text-3xl font-bold text-primary mb-2">38+</div>
+                      <div className="text-sm text-muted-foreground">Happy Clients</div>
                     </div>
                     <div>
-                      <div className="text-3xl font-bold text-primary mb-2">12K+</div>
-                      <div className="text-sm text-muted-foreground">Calls Handled</div>
+                      <div className="text-3xl font-bold text-primary mb-2">387+</div>
+                      <div className="text-sm text-muted-foreground">Conversations</div>
                     </div>
                     <div>
                       <div className="text-3xl font-bold text-primary mb-2">99.9%</div>
                       <div className="text-sm text-muted-foreground">Uptime</div>
                     </div>
                     <div>
-                      <div className="text-3xl font-bold text-primary mb-2">24/7</div>
-                      <div className="text-sm text-muted-foreground">Availability</div>
+                      <div className="text-3xl font-bold text-primary mb-2">50+</div>
+                      <div className="text-sm text-muted-foreground">Countries</div>
                     </div>
                   </div>
                 </div>
@@ -161,15 +141,13 @@ export default function AboutPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {values.map((value, index) => (
-                <div key={index} className="card-glow p-6 text-center hover:scale-105 transition-all duration-300">
+              {values.map((value, index) => <div key={index} className="card-glow p-6 text-center hover:scale-105 transition-all duration-300">
                   <div className="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-4">
                     <value.icon className="w-8 h-8 text-primary" />
                   </div>
                   <h3 className="text-xl font-bold mb-3">{value.title}</h3>
                   <p className="text-muted-foreground">{value.description}</p>
-                </div>
-              ))}
+                </div>)}
             </div>
           </div>
         </section>
@@ -188,18 +166,12 @@ export default function AboutPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {team.map((member, index) => (
-                <div key={index} className="card-glow p-6 text-center hover:scale-105 transition-all duration-300">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
-                  />
+              {team.map((member, index) => <div key={index} className="card-glow p-6 text-center hover:scale-105 transition-all duration-300">
+                  <img src={member.image} alt={member.name} className="w-24 h-24 rounded-full mx-auto mb-4 object-cover" />
                   <h3 className="text-xl font-bold mb-2">{member.name}</h3>
                   <p className="text-primary font-medium mb-3">{member.position}</p>
                   <p className="text-sm text-muted-foreground">{member.bio}</p>
-                </div>
-              ))}
+                </div>)}
             </div>
           </div>
         </section>
@@ -221,6 +193,5 @@ export default function AboutPage() {
           </div>
         </section>
       </div>
-    </Layout>
-  );
+    </Layout>;
 }
