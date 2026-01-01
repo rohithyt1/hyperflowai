@@ -66,9 +66,9 @@ export function Services() {
         </div>
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-16">
           {services.map((service, index) => (
-            <div key={index} className="card-glow p-8 group hover:scale-105 hover:-translate-y-2 transition-all duration-500">
+            <div key={index} className="card-glow p-6 lg:p-8 group md:hover:scale-105 md:hover:-translate-y-2 transition-all duration-500">
               <div className={`w-16 h-16 ${service.color} bg-current/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}>
                 <service.icon className={`w-8 h-8 ${service.color}`} />
               </div>
@@ -94,9 +94,9 @@ export function Services() {
         </div>
 
         {/* How It Works */}
-        <div className="card-glow p-12 text-center">
-          <h3 className="text-3xl font-bold mb-8">How It Works</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="card-glow p-6 sm:p-8 lg:p-12 text-center">
+          <h3 className="text-2xl lg:text-3xl font-bold mb-6 lg:mb-8">How It Works</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
             <div className="space-y-4">
               <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mx-auto text-primary-foreground font-bold text-xl">1</div>
               <h4 className="text-xl font-semibold">Consultation</h4>
