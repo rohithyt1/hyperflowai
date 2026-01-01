@@ -33,7 +33,7 @@ export function Layout({ children }: LayoutProps) {
               <div className="w-8 h-8 bg-gradient-to-r from-primary to-accent rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                 <Bot className="w-5 h-5 text-primary-foreground" />
               </div>
-              <span className="text-xl font-bold text-glow">HyperFlow</span>
+              <span className="text-xl font-bold text-glow">HyperFlow AI</span>
             </Link>
 
             {/* Desktop Navigation */}
