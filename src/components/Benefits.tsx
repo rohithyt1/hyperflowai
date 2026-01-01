@@ -61,10 +61,10 @@ export function Benefits() {
         </div>
 
         {/* Benefits Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {benefits.map((benefit, index) => (
             <div key={index} className="relative group">
-              <div className="card-glow p-8 h-full flex flex-col justify-between hover:scale-105 transition-all duration-500">
+              <div className="card-glow p-6 lg:p-8 h-full flex flex-col justify-between md:hover:scale-105 transition-all duration-500">
                 {/* Icon and Title */}
                 <div>
                   <div className="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors duration-300">
@@ -86,10 +86,10 @@ export function Benefits() {
         </div>
 
         {/* CTA Section */}
-        <div className="text-center mt-16">
-          <div className="card-glow p-12 max-w-4xl mx-auto">
-            <h3 className="text-3xl font-bold mb-6">Ready to Transform Your Business?</h3>
-            <p className="text-xl text-muted-foreground mb-8">
+        <div className="text-center mt-12 lg:mt-16">
+          <div className="card-glow p-6 sm:p-8 lg:p-12 max-w-4xl mx-auto">
+            <h3 className="text-2xl lg:text-3xl font-bold mb-4 lg:mb-6">Ready to Transform Your Business?</h3>
+            <p className="text-lg lg:text-xl text-muted-foreground mb-6 lg:mb-8">
               Join hundreds of businesses already using our AI agents to improve efficiency and customer satisfaction.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

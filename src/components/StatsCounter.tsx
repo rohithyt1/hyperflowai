@@ -107,23 +107,23 @@ export function StatsCounter() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8">
           {stats.map((stat, index) => (
             <div 
               key={index} 
-              className="card-glow p-8 text-center group hover:scale-105 transition-all duration-500"
+              className="card-glow p-4 sm:p-6 lg:p-8 text-center group md:hover:scale-105 transition-all duration-500"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className={`w-16 h-16 ${stat.color} bg-current/10 rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                <stat.icon className={`w-8 h-8 ${stat.color}`} />
+              <div className={`w-12 h-12 lg:w-16 lg:h-16 ${stat.color} bg-current/10 rounded-xl flex items-center justify-center mx-auto mb-4 lg:mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                <stat.icon className={`w-6 h-6 lg:w-8 lg:h-8 ${stat.color}`} />
               </div>
               
-              <div className={`text-4xl lg:text-5xl font-bold mb-2 ${stat.color}`}>
+              <div className={`text-2xl sm:text-3xl lg:text-5xl font-bold mb-2 ${stat.color}`}>
                 <Counter end={stat.value} suffix={stat.suffix} />
               </div>
               
-              <h3 className="text-xl font-semibold mb-2">{stat.label}</h3>
-              <p className="text-muted-foreground text-sm">{stat.description}</p>
+              <h3 className="text-base lg:text-xl font-semibold mb-1 lg:mb-2">{stat.label}</h3>
+              <p className="text-muted-foreground text-xs lg:text-sm hidden sm:block">{stat.description}</p>
             </div>
           ))}
         </div>
