@@ -7,7 +7,7 @@ export default function AboutPage() {
     bio: "Visionary leader driving AI innovation and business growth strategies.",
     image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&h=300&fit=crop&crop=face"
   }, {
-    name: "Sohail",
+    name: "Shri",
     position: "Partner",
     bio: "Strategic business development and partnership expert focused on scaling operations.",
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face"
