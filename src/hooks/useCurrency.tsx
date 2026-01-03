@@ -6,6 +6,7 @@ interface CurrencyContextType {
   rate: number;
   formatPrice: (usdAmount: number, showDecimals?: boolean) => string;
   isLoading: boolean;
+  toggleCurrency: () => void;
 }
 
 const CurrencyContext = createContext<CurrencyContextType>({
@@ -14,6 +15,7 @@ const CurrencyContext = createContext<CurrencyContextType>({
   rate: 1,
   formatPrice: (amount) => `$${amount}`,
   isLoading: true,
+  toggleCurrency: () => {},
 });
 
 // Approximate conversion rate (will be updated dynamically)
@@ -78,8 +80,12 @@ export function CurrencyProvider({ children }: { children: ReactNode }) {
       : `$${usdAmount.toLocaleString('en-US')}`;
   };
 
+  const toggleCurrency = () => {
+    setCurrency(prev => prev === 'USD' ? 'INR' : 'USD');
+  };
+
   return (
-    <CurrencyContext.Provider value={{ currency, symbol, rate, formatPrice, isLoading }}>
+    <CurrencyContext.Provider value={{ currency, symbol, rate, formatPrice, isLoading, toggleCurrency }}>
       {children}
     </CurrencyContext.Provider>
   );
