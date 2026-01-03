@@ -2,14 +2,16 @@ import { useState } from 'react';
 import { Check, Zap, Crown, Rocket, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
+import { useCurrency } from '@/hooks/useCurrency';
 
-const plans = [
+// Prices in USD
+const plansData = [
   {
     name: 'Monthly',
     subtitle: 'Flexible',
-    price: '$249',
+    priceUSD: 249,
     period: '/month',
-    description: 'Pay as you go',
+    descriptionTemplate: 'Pay as you go',
     icon: Zap,
     features: [
       'Unlimited calls handled',
@@ -21,14 +23,14 @@ const plans = [
     ],
     cta: 'Get Started',
     popular: false,
-    savings: null,
+    savingsUSD: null,
   },
   {
     name: '6 Months',
     subtitle: 'Best Value',
-    price: '$1,329',
+    priceUSD: 1329,
     period: '/6 months',
-    description: '$221.50/mo • Save $165',
+    descriptionTemplate: '{monthly}/mo • Save {savings}',
     icon: Crown,
     features: [
       'Unlimited calls handled',
@@ -39,16 +41,17 @@ const plans = [
       'Priority support',
       'Call analytics dashboard',
     ],
-    cta: 'Save $165',
+    cta: 'Save {savings}',
     popular: true,
-    savings: 165,
+    savingsUSD: 165,
+    monthlyUSD: 221.50,
   },
   {
     name: 'Enterprise',
     subtitle: 'Custom',
-    price: 'Custom',
+    priceUSD: null,
     period: '',
-    description: 'For large organizations',
+    descriptionTemplate: 'For large organizations',
     icon: Rocket,
     features: [
       'Everything in 6-Month plan',
@@ -61,12 +64,13 @@ const plans = [
     ],
     cta: 'Contact Us',
     popular: false,
-    savings: null,
+    savingsUSD: null,
   },
 ];
 
 export function PaymentGateway() {
   const [isProcessing, setIsProcessing] = useState<string | null>(null);
+  const { formatPrice, currency } = useCurrency();
 
   const handlePlanClick = async (planName: string) => {
     setIsProcessing(planName);
@@ -76,7 +80,7 @@ export function PaymentGateway() {
       
       toast({
         title: "Redirecting...",
-        description: planName === 'Sigma' 
+        description: planName === 'Enterprise' 
           ? "Opening booking calendar for consultation." 
           : "You'll be redirected to complete your order.",
       });
@@ -86,6 +90,24 @@ export function PaymentGateway() {
     } finally {
       setIsProcessing(null);
     }
+  };
+
+  const getFormattedPlan = (plan: typeof plansData[0]) => {
+    const price = plan.priceUSD ? formatPrice(plan.priceUSD) : 'Custom';
+    
+    let description = plan.descriptionTemplate;
+    let cta = plan.cta;
+    
+    if (plan.savingsUSD && plan.monthlyUSD) {
+      const monthlyFormatted = formatPrice(plan.monthlyUSD);
+      const savingsFormatted = formatPrice(plan.savingsUSD);
+      description = description
+        .replace('{monthly}', monthlyFormatted)
+        .replace('{savings}', savingsFormatted);
+      cta = cta.replace('{savings}', savingsFormatted);
+    }
+
+    return { price, description, cta };
   };
 
   return (
@@ -102,66 +124,75 @@ export function PaymentGateway() {
           <p className="text-muted-foreground text-lg max-w-xl mx-auto">
             Choose the plan that fits your business. No hidden fees.
           </p>
+          {/* Currency indicator */}
+          <div className="inline-flex items-center gap-2 mt-4 text-sm text-muted-foreground">
+            <span className="w-2 h-2 bg-primary rounded-full" />
+            Prices shown in {currency === 'INR' ? 'Indian Rupees (₹)' : 'US Dollars ($)'}
+          </div>
         </div>
 
         {/* Pricing Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {plans.map((plan) => (
-            <div
-              key={plan.name}
-              className={`relative card-glow p-6 flex flex-col ${
-                plan.popular 
-                  ? 'border-primary/50 bg-gradient-to-b from-primary/10 to-transparent md:scale-105 z-10' 
-                  : ''
-              }`}
-            >
-              {plan.popular && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="bg-primary text-primary-foreground text-xs font-bold px-3 py-1 rounded-full">
-                    MOST POPULAR
-                  </span>
-                </div>
-              )}
-
-              <div className="text-center mb-6 pt-2">
-                <div className={`w-12 h-12 mx-auto mb-4 rounded-xl flex items-center justify-center ${
-                  plan.popular ? 'bg-primary/20' : 'bg-card border border-border/50'
-                }`}>
-                  <plan.icon className={`w-6 h-6 ${plan.popular ? 'text-primary' : 'text-muted-foreground'}`} />
-                </div>
-                <h3 className="text-xl font-bold">{plan.name}</h3>
-                <p className="text-sm text-muted-foreground">{plan.subtitle}</p>
-              </div>
-
-              <div className="text-center mb-6">
-                <div className="flex items-baseline justify-center gap-1">
-                  <span className="text-4xl font-bold">{plan.price}</span>
-                  {plan.period && (
-                    <span className="text-muted-foreground">{plan.period}</span>
-                  )}
-                </div>
-                <p className="text-sm text-muted-foreground mt-1">{plan.description}</p>
-              </div>
-
-              <ul className="space-y-3 mb-8 flex-1">
-                {plan.features.map((feature, index) => (
-                  <li key={index} className="flex items-start gap-2 text-sm">
-                    <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <Button
-                className={`w-full ${plan.popular ? 'btn-hero' : ''}`}
-                variant={plan.popular ? 'default' : 'outline'}
-                onClick={() => handlePlanClick(plan.name)}
-                disabled={isProcessing === plan.name}
+          {plansData.map((plan) => {
+            const { price, description, cta } = getFormattedPlan(plan);
+            
+            return (
+              <div
+                key={plan.name}
+                className={`relative card-glow p-6 flex flex-col ${
+                  plan.popular 
+                    ? 'border-primary/50 bg-gradient-to-b from-primary/10 to-transparent md:scale-105 z-10' 
+                    : ''
+                }`}
               >
-                {isProcessing === plan.name ? 'Processing...' : plan.cta}
-              </Button>
-            </div>
-          ))}
+                {plan.popular && (
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                    <span className="bg-primary text-primary-foreground text-xs font-bold px-3 py-1 rounded-full">
+                      MOST POPULAR
+                    </span>
+                  </div>
+                )}
+
+                <div className="text-center mb-6 pt-2">
+                  <div className={`w-12 h-12 mx-auto mb-4 rounded-xl flex items-center justify-center ${
+                    plan.popular ? 'bg-primary/20' : 'bg-card border border-border/50'
+                  }`}>
+                    <plan.icon className={`w-6 h-6 ${plan.popular ? 'text-primary' : 'text-muted-foreground'}`} />
+                  </div>
+                  <h3 className="text-xl font-bold">{plan.name}</h3>
+                  <p className="text-sm text-muted-foreground">{plan.subtitle}</p>
+                </div>
+
+                <div className="text-center mb-6">
+                  <div className="flex items-baseline justify-center gap-1">
+                    <span className="text-4xl font-bold">{price}</span>
+                    {plan.period && (
+                      <span className="text-muted-foreground">{plan.period}</span>
+                    )}
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-1">{description}</p>
+                </div>
+
+                <ul className="space-y-3 mb-8 flex-1">
+                  {plan.features.map((feature, index) => (
+                    <li key={index} className="flex items-start gap-2 text-sm">
+                      <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <Button
+                  className={`w-full ${plan.popular ? 'btn-hero' : ''}`}
+                  variant={plan.popular ? 'default' : 'outline'}
+                  onClick={() => handlePlanClick(plan.name)}
+                  disabled={isProcessing === plan.name}
+                >
+                  {isProcessing === plan.name ? 'Processing...' : cta}
+                </Button>
+              </div>
+            );
+          })}
         </div>
 
         {/* Money back guarantee */}
