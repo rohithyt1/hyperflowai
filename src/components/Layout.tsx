@@ -4,6 +4,7 @@ import { Bot, Menu, X, Linkedin, Instagram, Mail, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { CursorFollower } from './CursorFollower';
+import { useCurrency } from '@/hooks/useCurrency';
 
 interface LayoutProps {
   children: ReactNode;
@@ -12,6 +13,7 @@ interface LayoutProps {
 export function Layout({ children }: LayoutProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const { currency, toggleCurrency } = useCurrency();
 
   const navigation = [
     { name: 'Home', href: '/' },
@@ -57,6 +59,18 @@ export function Layout({ children }: LayoutProps) {
                   {item.name}
                 </Link>
               ))}
+              
+              {/* Currency Toggle */}
+              <button
+                onClick={toggleCurrency}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border/50 bg-card/50 hover:bg-card hover:border-primary/30 transition-all text-sm font-medium"
+                title="Switch currency"
+              >
+                <span className={currency === 'USD' ? 'text-primary' : 'text-muted-foreground'}>$</span>
+                <span className="text-muted-foreground">/</span>
+                <span className={currency === 'INR' ? 'text-primary' : 'text-muted-foreground'}>₹</span>
+              </button>
+              
               <Button 
                 className="btn-hero"
                 onClick={() => window.open('https://cal.com/star-ment-yrerge/30min?overlayCalendar=true', '_blank')}
@@ -92,6 +106,17 @@ export function Layout({ children }: LayoutProps) {
                     {item.name}
                   </Link>
                 ))}
+                
+                {/* Mobile Currency Toggle */}
+                <button
+                  onClick={toggleCurrency}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border/50 bg-card/50 w-fit text-sm font-medium"
+                >
+                  <span className={currency === 'USD' ? 'text-primary' : 'text-muted-foreground'}>$ USD</span>
+                  <span className="text-muted-foreground">/</span>
+                  <span className={currency === 'INR' ? 'text-primary' : 'text-muted-foreground'}>₹ INR</span>
+                </button>
+                
                 <Button 
                   className="btn-hero w-fit"
                   onClick={() => window.open('https://cal.com/star-ment-yrerge/30min?overlayCalendar=true', '_blank')}
