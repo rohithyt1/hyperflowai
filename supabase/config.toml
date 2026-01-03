@@ -1,1 +1,4 @@
 project_id = "qkhyqcpqudyrtykriqqr"
+
+[functions.detect-currency]
+verify_jwt = false

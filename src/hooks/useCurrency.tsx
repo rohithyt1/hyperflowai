@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 
 interface CurrencyContextType {
   currency: 'USD' | 'INR';
@@ -18,7 +19,7 @@ const CurrencyContext = createContext<CurrencyContextType>({
   toggleCurrency: () => {},
 });
 
-// Approximate conversion rate (will be updated dynamically)
+// Approximate conversion rate
 const USD_TO_INR_RATE = 83;
 
 export function CurrencyProvider({ children }: { children: ReactNode }) {
@@ -26,42 +27,29 @@ export function CurrencyProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const detectCountry = async () => {
+    const detectCurrency = async () => {
       try {
-        // Use multiple geolocation APIs for reliability
-        const response = await fetch('https://ipapi.co/json/', { 
-          signal: AbortSignal.timeout(3000) 
-        });
-        const data = await response.json();
+        // Call backend edge function for reliable IP-based detection
+        const { data, error } = await supabase.functions.invoke('detect-currency');
         
-        if (data.country_code === 'IN') {
-          setCurrency('INR');
+        if (error) {
+          console.error('Edge function error:', error);
+          setCurrency('USD');
+        } else if (data?.currency) {
+          console.log('Currency detected:', data.currency, 'Country:', data.countryCode);
+          setCurrency(data.currency as 'USD' | 'INR');
         } else {
           setCurrency('USD');
         }
-      } catch (error) {
-        // Fallback: try another API
-        try {
-          const response = await fetch('https://ip-api.com/json/', {
-            signal: AbortSignal.timeout(3000)
-          });
-          const data = await response.json();
-          
-          if (data.countryCode === 'IN') {
-            setCurrency('INR');
-          } else {
-            setCurrency('USD');
-          }
-        } catch {
-          // Default to USD if all APIs fail
-          setCurrency('USD');
-        }
+      } catch (err) {
+        console.error('Failed to detect currency:', err);
+        setCurrency('USD');
       } finally {
         setIsLoading(false);
       }
     };
 
-    detectCountry();
+    detectCurrency();
   }, []);
 
   const symbol = currency === 'INR' ? '₹' : '$';
