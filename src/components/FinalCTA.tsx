@@ -1,7 +1,17 @@
 import { ArrowRight, Phone, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useCurrency } from '@/hooks/useCurrency';
 
 export function FinalCTA() {
+  const { formatPrice } = useCurrency();
+  const trialPriceUSD = 19;
+
+  const benefits = [
+    'Setup in 24 hours', 
+    `7-day trial for ${formatPrice(trialPriceUSD)}`, 
+    'No contracts'
+  ];
+
   return (
     <section className="py-16 md:py-24 relative overflow-hidden">
       {/* Background */}
@@ -27,7 +37,7 @@ export function FinalCTA() {
 
           {/* Quick benefits */}
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 mb-10">
-            {['Setup in 24 hours', '7-day trial for $19', 'No contracts'].map((benefit, i) => (
+            {benefits.map((benefit, i) => (
               <div key={i} className="flex items-center gap-2 text-sm">
                 <CheckCircle className="w-4 h-4 text-primary" />
                 <span>{benefit}</span>
@@ -40,7 +50,7 @@ export function FinalCTA() {
             className="btn-hero text-lg py-6 px-10 group"
             onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
           >
-            Start 7-Day Trial — $19
+            Start 7-Day Trial — {formatPrice(trialPriceUSD)}
             <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
           </Button>
 

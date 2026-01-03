@@ -1,12 +1,26 @@
 import { useState, useEffect } from 'react';
-import { Calculator, DollarSign, Phone, TrendingUp, ArrowRight } from 'lucide-react';
+import { Calculator, TrendingUp, Phone, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useCurrency } from '@/hooks/useCurrency';
 
 export function ROICalculator() {
-  const [avgTicket, setAvgTicket] = useState(250);
+  const { formatPrice, currency, rate } = useCurrency();
+  
+  // Adjust slider ranges based on currency
+  const avgTicketMin = currency === 'INR' ? 500 : 50;
+  const avgTicketMax = currency === 'INR' ? 50000 : 2000;
+  const avgTicketStep = currency === 'INR' ? 500 : 50;
+  const defaultAvgTicket = currency === 'INR' ? 5000 : 250;
+  
+  const [avgTicket, setAvgTicket] = useState(defaultAvgTicket);
   const [missedCalls, setMissedCalls] = useState(15);
   const [callbackRate, setCallbackRate] = useState(30);
   const [recoveredRevenue, setRecoveredRevenue] = useState(0);
+
+  // Reset avg ticket when currency changes
+  useEffect(() => {
+    setAvgTicket(currency === 'INR' ? 5000 : 250);
+  }, [currency]);
 
   useEffect(() => {
     // Lost leads = missed calls * (1 - callback rate)
@@ -17,6 +31,19 @@ export function ROICalculator() {
     const annualRevenue = weeklyRevenue * 52;
     setRecoveredRevenue(Math.round(annualRevenue));
   }, [avgTicket, missedCalls, callbackRate]);
+
+  // AI receptionist cost in local currency
+  const aiCostUSD = 297;
+  const aiCost = currency === 'INR' ? Math.round(aiCostUSD * rate) : aiCostUSD;
+  const monthlyLoss = Math.round(recoveredRevenue / 12);
+  const roi = aiCost > 0 ? Math.round((monthlyLoss / aiCost) * 100) : 0;
+
+  const formatLocalPrice = (amount: number) => {
+    if (currency === 'INR') {
+      return `₹${amount.toLocaleString('en-IN')}`;
+    }
+    return `$${amount.toLocaleString('en-US')}`;
+  };
 
   return (
     <section className="py-16 md:py-24 relative overflow-hidden">
@@ -51,20 +78,20 @@ export function ROICalculator() {
               <div>
                 <label className="flex items-center justify-between mb-2">
                   <span className="text-sm font-medium">Average Sale Value</span>
-                  <span className="text-primary font-bold">${avgTicket}</span>
+                  <span className="text-primary font-bold">{formatLocalPrice(avgTicket)}</span>
                 </label>
                 <input
                   type="range"
-                  min="50"
-                  max="2000"
-                  step="50"
+                  min={avgTicketMin}
+                  max={avgTicketMax}
+                  step={avgTicketStep}
                   value={avgTicket}
                   onChange={(e) => setAvgTicket(Number(e.target.value))}
                   className="w-full h-2 bg-border rounded-lg appearance-none cursor-pointer accent-primary"
                 />
                 <div className="flex justify-between text-xs text-muted-foreground mt-1">
-                  <span>$50</span>
-                  <span>$2,000</span>
+                  <span>{formatLocalPrice(avgTicketMin)}</span>
+                  <span>{formatLocalPrice(avgTicketMax)}</span>
                 </div>
               </div>
 
@@ -120,26 +147,25 @@ export function ROICalculator() {
 
               <div className="text-center py-6">
                 <div className="text-sm text-muted-foreground mb-2">Annual Revenue You're Leaving on the Table</div>
-                <div className="flex items-center justify-center gap-1">
-                  <DollarSign className="w-8 h-8 text-destructive" />
+                <div className="flex items-center justify-center">
                   <span className="text-5xl sm:text-6xl font-bold text-destructive">
-                    {recoveredRevenue.toLocaleString()}
+                    {formatLocalPrice(recoveredRevenue)}
                   </span>
                 </div>
                 <p className="text-muted-foreground mt-2 text-sm">
-                  That's <span className="text-foreground font-medium">${Math.round(recoveredRevenue / 12).toLocaleString()}/month</span> in lost revenue
+                  That's <span className="text-foreground font-medium">{formatLocalPrice(monthlyLoss)}/month</span> in lost revenue
                 </p>
               </div>
 
               <div className="border-t border-border/50 pt-6 mt-6">
                 <div className="flex items-center justify-between mb-4">
                   <span className="text-sm">AI Receptionist Cost</span>
-                  <span className="font-bold text-primary">$297/mo</span>
+                  <span className="font-bold text-primary">{formatLocalPrice(aiCost)}/mo</span>
                 </div>
                 <div className="flex items-center justify-between mb-6">
                   <span className="text-sm">ROI</span>
                   <span className="font-bold text-green-500">
-                    {Math.round(((recoveredRevenue / 12) / 297) * 100)}% return
+                    {roi}% return
                   </span>
                 </div>
 

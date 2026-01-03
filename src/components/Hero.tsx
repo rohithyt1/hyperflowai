@@ -1,12 +1,14 @@
 import { ArrowRight, Phone, PhoneOff, PhoneCall, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useEffect, useRef, useState } from 'react';
-import heroImage from '@/assets/hero-ai-avatar.jpg';
+import { useCurrency } from '@/hooks/useCurrency';
+import heroImage from '@/assets/workflow-hero.jpg';
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 });
   const [callsAnswered, setCallsAnswered] = useState(312);
+  const { formatPrice, currency } = useCurrency();
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -33,6 +35,11 @@ export function Hero() {
     }, 8000);
     return () => clearInterval(interval);
   }, []);
+
+  // Trial price in USD
+  const trialPriceUSD = 19;
+  const revenueGainUSD = 350;
+  const monthlyLossUSD = 3750;
 
   return (
     <section 
@@ -119,7 +126,7 @@ export function Hero() {
                 onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 <PhoneCall className="w-5 h-5 mr-2" />
-                Start 7-Day Trial — $19
+                Start 7-Day Trial — {formatPrice(trialPriceUSD)}
                 <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
             </div>
@@ -143,7 +150,7 @@ export function Hero() {
             <div className="relative z-10 rounded-2xl overflow-hidden border border-border/50 shadow-2xl shadow-primary/10">
               <img 
                 src={heroImage} 
-                alt="AI Receptionist answering calls" 
+                alt="AI Workflow - Calls to Revenue" 
                 className="w-full h-auto"
               />
               {/* Overlay gradient */}
@@ -171,7 +178,7 @@ export function Hero() {
                 </div>
                 <div>
                   <div className="text-xs text-muted-foreground">New Booking</div>
-                  <div className="text-sm font-semibold">+$350 revenue</div>
+                  <div className="text-sm font-semibold">+{formatPrice(revenueGainUSD)} revenue</div>
                 </div>
               </div>
             </div>
@@ -198,7 +205,7 @@ export function Hero() {
             <PhoneOff className="w-10 h-10 text-destructive mx-auto mb-3 animate-shake" />
             <h3 className="font-bold text-lg mb-2 text-center">Without AI</h3>
             <p className="text-muted-foreground text-sm text-center">Missed calls = Lost customers</p>
-            <div className="mt-3 text-destructive font-bold text-2xl text-center">-$3,750/mo</div>
+            <div className="mt-3 text-destructive font-bold text-2xl text-center">-{formatPrice(monthlyLossUSD)}/mo</div>
           </div>
 
           {/* With */}
