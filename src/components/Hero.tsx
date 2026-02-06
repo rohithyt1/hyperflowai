@@ -1,9 +1,194 @@
-import { ArrowRight, Phone, PhoneOff, PhoneCall, Play, Sparkles, Zap } from 'lucide-react';
+import { ArrowRight, Phone, PhoneOff, PhoneCall, Play, Sparkles, Zap, Bot, Calendar, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useEffect, useRef, useState } from 'react';
 import { useCurrency } from '@/hooks/useCurrency';
 import { motion } from 'framer-motion';
-import heroImage from '@/assets/workflow-hero.jpg';
+
+// Animated call visualization component
+function AnimatedCallVisual() {
+  return (
+    <div className="relative w-full h-full min-h-[400px] flex items-center justify-center">
+      {/* Central AI Bot */}
+      <motion.div
+        className="absolute z-20 w-32 h-32 md:w-40 md:h-40 bg-gradient-to-br from-primary/20 to-accent/20 rounded-3xl border-2 border-primary/40 flex items-center justify-center backdrop-blur-sm"
+        animate={{
+          scale: [1, 1.05, 1],
+          boxShadow: [
+            '0 0 0 0 hsl(var(--primary) / 0.3)',
+            '0 0 60px 20px hsl(var(--primary) / 0.2)',
+            '0 0 0 0 hsl(var(--primary) / 0.3)',
+          ],
+        }}
+        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <Bot className="w-16 h-16 md:w-20 md:h-20 text-primary" />
+        
+        {/* Rotating ring */}
+        <motion.div
+          className="absolute inset-0 rounded-3xl border-2 border-dashed border-primary/30"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        />
+        
+        {/* Pulsing rings */}
+        {[1, 2, 3].map((ring) => (
+          <motion.div
+            key={ring}
+            className="absolute inset-0 rounded-3xl border border-primary/20"
+            animate={{
+              scale: [1, 1.5 + ring * 0.3],
+              opacity: [0.5, 0],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              delay: ring * 0.5,
+              ease: "easeOut",
+            }}
+          />
+        ))}
+      </motion.div>
+
+      {/* Incoming call - Left */}
+      <motion.div
+        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-10"
+        initial={{ x: -100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ delay: 0.5, duration: 0.8 }}
+      >
+        <motion.div
+          className="w-20 h-20 md:w-24 md:h-24 bg-gradient-to-br from-green-500/20 to-green-600/20 rounded-2xl border border-green-500/40 flex items-center justify-center"
+          animate={{
+            y: [0, -10, 0],
+            boxShadow: [
+              '0 0 0 0 rgba(34, 197, 94, 0.3)',
+              '0 0 30px 10px rgba(34, 197, 94, 0.1)',
+              '0 0 0 0 rgba(34, 197, 94, 0.3)',
+            ],
+          }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <Phone className="w-10 h-10 md:w-12 md:h-12 text-green-400" />
+        </motion.div>
+        <motion.p
+          className="text-center text-xs md:text-sm text-muted-foreground mt-2"
+          animate={{ opacity: [0.5, 1, 0.5] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
+          Incoming Call
+        </motion.p>
+        
+        {/* Connection line to center */}
+        <motion.div
+          className="absolute top-1/2 left-full w-8 md:w-16 h-0.5 bg-gradient-to-r from-green-500/50 to-transparent"
+          animate={{ opacity: [0.3, 1, 0.3], scaleX: [0.8, 1, 0.8] }}
+          transition={{ duration: 1.5, repeat: Infinity }}
+        />
+        <motion.div
+          className="absolute top-1/2 left-full ml-2 w-2 h-2 bg-green-500 rounded-full"
+          animate={{ 
+            x: [0, 30, 60],
+            opacity: [1, 0.5, 0],
+          }}
+          transition={{ duration: 1.5, repeat: Infinity }}
+        />
+      </motion.div>
+
+      {/* Output - Right: Calendar */}
+      <motion.div
+        className="absolute right-4 md:right-8 top-1/3 -translate-y-1/2 z-10"
+        initial={{ x: 100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ delay: 0.7, duration: 0.8 }}
+      >
+        <motion.div
+          className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-purple-500/20 to-purple-600/20 rounded-2xl border border-purple-500/40 flex items-center justify-center"
+          animate={{
+            y: [0, -8, 0],
+          }}
+          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
+        >
+          <Calendar className="w-8 h-8 md:w-10 md:h-10 text-purple-400" />
+        </motion.div>
+        <motion.p
+          className="text-center text-xs text-muted-foreground mt-2"
+          animate={{ opacity: [0.5, 1, 0.5] }}
+          transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
+        >
+          Booked
+        </motion.p>
+        
+        {/* Connection line from center */}
+        <motion.div
+          className="absolute top-1/2 right-full w-8 md:w-12 h-0.5 bg-gradient-to-l from-purple-500/50 to-transparent"
+          animate={{ opacity: [0.3, 1, 0.3] }}
+          transition={{ duration: 1.5, repeat: Infinity, delay: 0.5 }}
+        />
+      </motion.div>
+
+      {/* Output - Right Bottom: Confirmation */}
+      <motion.div
+        className="absolute right-4 md:right-8 bottom-1/4 z-10"
+        initial={{ x: 100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ delay: 0.9, duration: 0.8 }}
+      >
+        <motion.div
+          className="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-accent/20 to-accent/10 rounded-2xl border border-accent/40 flex items-center justify-center"
+          animate={{
+            y: [0, -6, 0],
+          }}
+          transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.6 }}
+        >
+          <CheckCircle className="w-8 h-8 md:w-10 md:h-10 text-accent" />
+        </motion.div>
+        <motion.p
+          className="text-center text-xs text-muted-foreground mt-2"
+          animate={{ opacity: [0.5, 1, 0.5] }}
+          transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
+        >
+          Confirmed
+        </motion.p>
+      </motion.div>
+
+      {/* Floating particles */}
+      {[...Array(8)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute w-2 h-2 bg-primary/30 rounded-full"
+          style={{
+            left: `${20 + (i * 10)}%`,
+            top: `${15 + (i % 4) * 20}%`,
+          }}
+          animate={{
+            y: [0, -20, 0],
+            opacity: [0.2, 0.6, 0.2],
+            scale: [1, 1.5, 1],
+          }}
+          transition={{
+            duration: 3 + i * 0.3,
+            delay: i * 0.4,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
+
+      {/* Animated background glow */}
+      <motion.div
+        className="absolute inset-0 rounded-3xl"
+        style={{
+          background: 'radial-gradient(circle at center, hsl(var(--primary) / 0.1) 0%, transparent 60%)',
+        }}
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.5, 0.8, 0.5],
+        }}
+        transition={{ duration: 4, repeat: Infinity }}
+      />
+    </div>
+  );
+}
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -76,39 +261,7 @@ export function Hero() {
           }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
         />
-        <motion.div
-          className="absolute w-[300px] h-[300px] bg-gradient-to-br from-primary/10 to-accent/10 rounded-full blur-[60px]"
-          style={{ top: '40%', right: '30%' }}
-          animate={{
-            scale: [1, 1.3, 1],
-            opacity: [0.3, 0.6, 0.3],
-          }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        />
       </div>
-
-      {/* Floating particles */}
-      {[...Array(6)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-2 h-2 bg-primary/30 rounded-full blur-sm hidden md:block"
-          style={{
-            left: `${15 + i * 15}%`,
-            top: `${20 + (i % 3) * 25}%`,
-          }}
-          animate={{
-            y: [0, -30, 0],
-            opacity: [0.2, 0.6, 0.2],
-            scale: [1, 1.5, 1],
-          }}
-          transition={{
-            duration: 4 + i * 0.5,
-            delay: i * 0.5,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-      ))}
 
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -261,17 +414,11 @@ export function Hero() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.35 }}
             >
-              <motion.div
-                className="flex items-center gap-2"
-                whileHover={{ scale: 1.05 }}
-              >
+              <motion.div className="flex items-center gap-2" whileHover={{ scale: 1.05 }}>
                 <Zap className="w-4 h-4 text-primary" />
                 <span>Setup in 24 hours</span>
               </motion.div>
-              <motion.div
-                className="flex items-center gap-2"
-                whileHover={{ scale: 1.05 }}
-              >
+              <motion.div className="flex items-center gap-2" whileHover={{ scale: 1.05 }}>
                 <motion.div
                   className="w-2 h-2 bg-green-500 rounded-full"
                   animate={{ scale: [1, 1.2, 1] }}
@@ -282,23 +429,15 @@ export function Hero() {
             </motion.div>
           </div>
 
-          {/* Right - Image with overlapping elements */}
+          {/* Right - Animated Visual (replaces static image) */}
           <motion.div
             className="relative"
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            {/* Main image */}
-            <motion.div
-              className="relative z-10 rounded-3xl overflow-hidden border border-border/50 shadow-2xl"
-              whileHover={{ scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 300 }}
-              style={{ boxShadow: '0 25px 80px hsl(var(--primary) / 0.2)' }}
-            >
-              <img src={heroImage} alt="AI Workflow - Calls to Revenue" className="w-full h-auto" />
-              {/* Overlay gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent" />
+            <div className="relative z-10 rounded-3xl overflow-hidden border border-border/50 bg-gradient-to-br from-card/80 to-card/40 backdrop-blur-sm p-6 md:p-8">
+              <AnimatedCallVisual />
               
               {/* Floating stat card */}
               <motion.div
@@ -331,7 +470,7 @@ export function Hero() {
                   </motion.div>
                 </div>
               </motion.div>
-            </motion.div>
+            </div>
 
             {/* Floating cards */}
             <motion.div
@@ -396,7 +535,7 @@ export function Hero() {
               </motion.div>
             </motion.div>
 
-            {/* Decorative glow behind image */}
+            {/* Decorative glow */}
             <motion.div
               className="absolute inset-0 -z-10 bg-gradient-to-br from-primary/20 via-accent/10 to-transparent rounded-3xl blur-3xl"
               animate={{
