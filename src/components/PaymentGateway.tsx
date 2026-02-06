@@ -195,10 +195,10 @@ export function PaymentGateway() {
           })}
         </div>
 
-        {/* Money back guarantee */}
+        {/* Secure payment badge */}
         <div className="flex items-center justify-center gap-2 mt-12 text-muted-foreground text-sm">
           <Shield className="w-4 h-4 text-primary" />
-          <span><span className="text-foreground font-medium">30-day money-back guarantee</span> • No questions asked</span>
+          <span><span className="text-foreground font-medium">Secure payment</span> • Cancel anytime</span>
         </div>
       </div>
     </section>

@@ -191,8 +191,8 @@ export function Layout({ children }: LayoutProps) {
                 </li>
               </ul>
               <div className="mt-4 space-y-2 text-sm text-muted-foreground">
-                <a href="#" className="block hover:text-primary transition-colors">Privacy Policy</a>
-                <a href="#" className="block hover:text-primary transition-colors">Terms of Service</a>
+                <Link to="/terms" className="block hover:text-primary transition-colors">Privacy Policy</Link>
+                <Link to="/terms" className="block hover:text-primary transition-colors">Terms of Service</Link>
               </div>
             </div>
           </div>
