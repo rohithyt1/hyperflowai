@@ -1,11 +1,16 @@
 import { Layout } from '@/components/Layout';
-import { MapPin, Phone, Mail, Clock, Send, MessageSquare } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Send, MessageSquare, CheckCircle, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
 export default function ContactPage() {
+  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -16,31 +21,42 @@ export default function ContactPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
     
     try {
-      const response = await fetch('/wp-json/hyperflow/v1/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-      
-      if (response.ok) {
-        alert('Message sent successfully! We\'ll get back to you within 24 hours.');
-        setFormData({
-          name: '',
-          email: '',
-          company: '',
-          service: '',
-          message: ''
+      const { error } = await supabase
+        .from('contacts')
+        .insert({
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          company: formData.company.trim() || null,
+          service: formData.service || null,
+          message: formData.message.trim(),
         });
-      } else {
-        alert('Failed to send message. Please try again or contact us directly.');
-      }
+      
+      if (error) throw error;
+      
+      setIsSubmitted(true);
+      toast({
+        title: "Message sent!",
+        description: "We'll get back to you within 24 hours.",
+      });
+      setFormData({
+        name: '',
+        email: '',
+        company: '',
+        service: '',
+        message: ''
+      });
     } catch (error) {
       console.error('Error submitting form:', error);
-      alert('Failed to send message. Please try again or contact us directly.');
+      toast({
+        title: "Failed to send",
+        description: "Please try again or email us directly.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -209,9 +225,27 @@ export default function ContactPage() {
                       />
                     </div>
                     
-                    <Button type="submit" className="btn-hero w-full group">
-                      Send Message
-                      <Send className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                    <Button 
+                      type="submit" 
+                      className="btn-hero w-full group"
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                          Sending...
+                        </>
+                      ) : isSubmitted ? (
+                        <>
+                          <CheckCircle className="w-4 h-4 mr-2" />
+                          Sent Successfully!
+                        </>
+                      ) : (
+                        <>
+                          Send Message
+                          <Send className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                        </>
+                      )}
                     </Button>
                   </form>
                 </div>
