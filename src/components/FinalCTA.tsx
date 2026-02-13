@@ -55,7 +55,7 @@ export function FinalCTA() {
           </Button>
 
           <p className="text-sm text-muted-foreground mt-4">
-            30-day money-back guarantee
+            Secure payment • Cancel anytime
           </p>
         </div>
       </div>
