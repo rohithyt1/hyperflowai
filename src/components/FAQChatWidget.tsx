@@ -10,7 +10,7 @@ const QUICK_QUESTIONS = [
   "How does it work?",
   "What's the pricing?",
   "How fast can I go live?",
-  "Do you offer a free trial?",
+  "How does the $19 trial work?",
 ];
 
 export function FAQChatWidget() {

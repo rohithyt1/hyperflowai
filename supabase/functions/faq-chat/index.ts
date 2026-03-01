@@ -21,8 +21,8 @@ FACTS (only use when asked):
 - AI Voice Receptionist: answers calls 24/7, books appointments, takes messages, transfers urgent calls.
 - AI Chatbots: WhatsApp, Instagram, Messenger, website, email, SMS — one dashboard.
 - Setup: 24-72 hours, no coding needed, keep your number.
-- Trial: 14 days free, no card needed.
-- Pricing: starts at $249/mo (₹20,750/mo). No hidden fees, cancel anytime.
+- Trial: $19 for 7 days. No free trial available.
+- Pricing: starts at $249/mo (₹20,750/mo). 6-month plan at $1329 (save more). No hidden fees, cancel anytime.
 - Integrations: Google Calendar, Outlook, Calendly, Salesforce, HubSpot, Zoho, Stripe, Razorpay, Zapier, Make.
 - Security: enterprise encryption, GDPR compliant.
 - Support: 24/7 + dedicated success manager.
