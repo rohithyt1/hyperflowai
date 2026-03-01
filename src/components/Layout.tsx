@@ -4,6 +4,7 @@ import { Bot, Menu, X, Linkedin, Instagram, Mail, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { CursorFollower } from './CursorFollower';
+import { FAQChatWidget } from './FAQChatWidget';
 import { useCurrency } from '@/hooks/useCurrency';
 
 interface LayoutProps {
@@ -202,6 +203,8 @@ export function Layout({ children }: LayoutProps) {
           </div>
         </div>
       </footer>
+      {/* AI FAQ Chat Widget */}
+      <FAQChatWidget />
     </div>
   );
 }
