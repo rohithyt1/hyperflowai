@@ -80,7 +80,7 @@ const voiceSamples: VoiceSample[] = [
       "The Golden Fork, Lisa speaking! Are you calling about our weekend brunch? We still have availability for the 11am seating. Our mimosa flight is absolutely divine!",
       "Hi! Welcome to The Golden Fork. This is Lisa. Looking for a table for this evening? We have a lovely patio available. Can I put you down for 7pm? Perfect for watching the sunset!",
     ],
-    voiceSettings: { pitch: 1.2, rate: 1.05, preferredVoice: 'female' },
+    voiceSettings: { pitch: 1.06, rate: 0.96, preferredVoice: 'female' },
   },
   {
     id: 'medical',
