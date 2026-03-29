@@ -41,7 +41,7 @@ const voiceSamples: VoiceSample[] = [
       "Miller and Associates, Michael speaking. Thank you for calling. Are you an existing client or is this regarding a new matter? I can connect you with the right attorney immediately.",
       "Hello, thank you for reaching Miller and Associates. This is Michael. I understand legal matters can be stressful. Let me get some details so I can connect you with the best attorney for your situation.",
     ],
-    voiceSettings: { pitch: 0.9, rate: 0.9, preferredVoice: 'male' },
+    voiceSettings: { pitch: 0.95, rate: 0.93, preferredVoice: 'male' },
   },
   {
     id: 'realestate',
