@@ -4,6 +4,7 @@ import { SimpleWorkflow } from '@/components/SimpleWorkflow';
 import { HowItWorks } from '@/components/HowItWorks';
 import { ProblemSolution } from '@/components/ProblemSolution';
 import { ROICalculator } from '@/components/ROICalculator';
+import { AIvsHuman } from '@/components/AIvsHuman';
 import { VoiceSamples } from '@/components/VoiceSamples';
 import { SimpleDemo } from '@/components/SimpleDemo';
 import { TestimonialsCarousel } from '@/components/TestimonialsCarousel';
@@ -20,6 +21,7 @@ const Index = () => {
       <HowItWorks />
       <ProblemSolution />
       <ROICalculator />
+      <AIvsHuman />
       <VoiceSamples />
       <SimpleDemo />
       <TestimonialsCarousel />

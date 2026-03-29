@@ -28,7 +28,7 @@ const voiceSamples: VoiceSample[] = [
       "Hi! Bright Smile Dental, Emma speaking. Are you calling to schedule a cleaning or checkup? We're currently offering a special on new patient exams. Let me find a time that works for you!",
       "Thank you for calling Bright Smile Dental. This is Emma. I see you're due for your six-month cleaning! Would Tuesday at 2pm work for you? Dr. Johnson has that slot open.",
     ],
-    voiceSettings: { pitch: 1.1, rate: 0.95, preferredVoice: 'female' },
+    voiceSettings: { pitch: 1.05, rate: 0.98, preferredVoice: 'female' },
   },
   {
     id: 'law',
@@ -41,7 +41,7 @@ const voiceSamples: VoiceSample[] = [
       "Miller and Associates, Michael speaking. Thank you for calling. Are you an existing client or is this regarding a new matter? I can connect you with the right attorney immediately.",
       "Hello, thank you for reaching Miller and Associates. This is Michael. I understand legal matters can be stressful. Let me get some details so I can connect you with the best attorney for your situation.",
     ],
-    voiceSettings: { pitch: 0.9, rate: 0.9, preferredVoice: 'male' },
+    voiceSettings: { pitch: 0.95, rate: 0.93, preferredVoice: 'male' },
   },
   {
     id: 'realestate',
@@ -54,7 +54,7 @@ const voiceSamples: VoiceSample[] = [
       "Premier Realty, this is Sarah! Great timing - we just listed three beautiful homes in the downtown area. Are you currently in the market? I can set up viewings as early as this weekend!",
       "Hello! Sarah here at Premier Realty. Looking for your dream home? Tell me what neighborhood you're interested in and I'll have our top agent reach out with some exclusive listings.",
     ],
-    voiceSettings: { pitch: 1.15, rate: 1.0, preferredVoice: 'female' },
+    voiceSettings: { pitch: 1.08, rate: 0.97, preferredVoice: 'female' },
   },
   {
     id: 'hvac',
@@ -67,7 +67,7 @@ const voiceSamples: VoiceSample[] = [
       "Comfort Pro HVAC, James speaking. Is your AC not cooling properly? Don't sweat it - we have technicians available right now. What's the issue you're experiencing?",
       "Hi, this is James at Comfort Pro. Are you calling about a repair or maintenance? We're running a special on annual tune-ups this month. Keeps your system running efficiently all year!",
     ],
-    voiceSettings: { pitch: 0.95, rate: 0.92, preferredVoice: 'male' },
+    voiceSettings: { pitch: 0.98, rate: 0.95, preferredVoice: 'male' },
   },
   {
     id: 'restaurant',
@@ -80,7 +80,7 @@ const voiceSamples: VoiceSample[] = [
       "The Golden Fork, Lisa speaking! Are you calling about our weekend brunch? We still have availability for the 11am seating. Our mimosa flight is absolutely divine!",
       "Hi! Welcome to The Golden Fork. This is Lisa. Looking for a table for this evening? We have a lovely patio available. Can I put you down for 7pm? Perfect for watching the sunset!",
     ],
-    voiceSettings: { pitch: 1.2, rate: 1.05, preferredVoice: 'female' },
+    voiceSettings: { pitch: 1.06, rate: 0.96, preferredVoice: 'female' },
   },
   {
     id: 'medical',
@@ -93,7 +93,7 @@ const voiceSamples: VoiceSample[] = [
       "Wellness Medical Center, David here. Are you calling about lab results? Let me pull up your file. I can have one of our nurses call you back within the hour to discuss them.",
       "Thank you for calling Wellness Medical. This is David. I understand you're not feeling well. Let me check Dr. Patel's availability for today. We always keep slots open for patients who need to be seen urgently.",
     ],
-    voiceSettings: { pitch: 0.85, rate: 0.88, preferredVoice: 'male' },
+    voiceSettings: { pitch: 0.93, rate: 0.92, preferredVoice: 'male' },
   },
   {
     id: 'insurance',
@@ -106,7 +106,7 @@ const voiceSamples: VoiceSample[] = [
       "Secure Shield Insurance, Rachel speaking. Looking to bundle your policies? We can save you up to 25% when you combine auto and home. Let me run some numbers for you!",
       "Hi, this is Rachel at Secure Shield. I see you recently got a quote from us. Great news - I can lock in that rate for you today. Do you have a few minutes to review the coverage details?",
     ],
-    voiceSettings: { pitch: 1.05, rate: 0.95, preferredVoice: 'female' },
+    voiceSettings: { pitch: 1.02, rate: 0.96, preferredVoice: 'female' },
   },
   {
     id: 'automotive',
@@ -119,7 +119,7 @@ const voiceSamples: VoiceSample[] = [
       "Metro Auto, Chris speaking. Interested in our certified pre-owned selection? We have over 50 vehicles under 30,000 miles with full warranty. What style are you looking for - sedan, SUV, or truck?",
       "Hi there! Chris at Metro Auto Group. I heard you're looking to trade in your vehicle. We're offering above-market value on trade-ins this week. Want to come in for a free appraisal?",
     ],
-    voiceSettings: { pitch: 0.92, rate: 0.95, preferredVoice: 'male' },
+    voiceSettings: { pitch: 0.96, rate: 0.94, preferredVoice: 'male' },
   },
 ];
 

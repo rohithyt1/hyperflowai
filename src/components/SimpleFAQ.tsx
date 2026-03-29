@@ -24,7 +24,7 @@ const faqs = [
   },
   {
     q: "Can I try it first?",
-    a: "Yes! We offer a 14-day free trial. No credit card needed to start."
+    a: "Absolutely! We offer a 7-day paid trial for just $19. You get full access to test everything with real calls before committing."
   },
 ];
 
