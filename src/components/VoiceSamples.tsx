@@ -93,7 +93,7 @@ const voiceSamples: VoiceSample[] = [
       "Wellness Medical Center, David here. Are you calling about lab results? Let me pull up your file. I can have one of our nurses call you back within the hour to discuss them.",
       "Thank you for calling Wellness Medical. This is David. I understand you're not feeling well. Let me check Dr. Patel's availability for today. We always keep slots open for patients who need to be seen urgently.",
     ],
-    voiceSettings: { pitch: 0.85, rate: 0.88, preferredVoice: 'male' },
+    voiceSettings: { pitch: 0.93, rate: 0.92, preferredVoice: 'male' },
   },
   {
     id: 'insurance',
