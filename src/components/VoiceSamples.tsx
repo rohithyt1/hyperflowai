@@ -54,7 +54,7 @@ const voiceSamples: VoiceSample[] = [
       "Premier Realty, this is Sarah! Great timing - we just listed three beautiful homes in the downtown area. Are you currently in the market? I can set up viewings as early as this weekend!",
       "Hello! Sarah here at Premier Realty. Looking for your dream home? Tell me what neighborhood you're interested in and I'll have our top agent reach out with some exclusive listings.",
     ],
-    voiceSettings: { pitch: 1.15, rate: 1.0, preferredVoice: 'female' },
+    voiceSettings: { pitch: 1.08, rate: 0.97, preferredVoice: 'female' },
   },
   {
     id: 'hvac',
