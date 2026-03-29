@@ -106,7 +106,7 @@ const voiceSamples: VoiceSample[] = [
       "Secure Shield Insurance, Rachel speaking. Looking to bundle your policies? We can save you up to 25% when you combine auto and home. Let me run some numbers for you!",
       "Hi, this is Rachel at Secure Shield. I see you recently got a quote from us. Great news - I can lock in that rate for you today. Do you have a few minutes to review the coverage details?",
     ],
-    voiceSettings: { pitch: 1.05, rate: 0.95, preferredVoice: 'female' },
+    voiceSettings: { pitch: 1.02, rate: 0.96, preferredVoice: 'female' },
   },
   {
     id: 'automotive',
