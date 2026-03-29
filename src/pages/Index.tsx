@@ -21,6 +21,7 @@ const Index = () => {
       <HowItWorks />
       <ProblemSolution />
       <ROICalculator />
+      <AIvsHuman />
       <VoiceSamples />
       <SimpleDemo />
       <TestimonialsCarousel />
