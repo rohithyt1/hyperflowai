@@ -67,7 +67,7 @@ const voiceSamples: VoiceSample[] = [
       "Comfort Pro HVAC, James speaking. Is your AC not cooling properly? Don't sweat it - we have technicians available right now. What's the issue you're experiencing?",
       "Hi, this is James at Comfort Pro. Are you calling about a repair or maintenance? We're running a special on annual tune-ups this month. Keeps your system running efficiently all year!",
     ],
-    voiceSettings: { pitch: 0.95, rate: 0.92, preferredVoice: 'male' },
+    voiceSettings: { pitch: 0.98, rate: 0.95, preferredVoice: 'male' },
   },
   {
     id: 'restaurant',
