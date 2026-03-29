@@ -28,7 +28,7 @@ const voiceSamples: VoiceSample[] = [
       "Hi! Bright Smile Dental, Emma speaking. Are you calling to schedule a cleaning or checkup? We're currently offering a special on new patient exams. Let me find a time that works for you!",
       "Thank you for calling Bright Smile Dental. This is Emma. I see you're due for your six-month cleaning! Would Tuesday at 2pm work for you? Dr. Johnson has that slot open.",
     ],
-    voiceSettings: { pitch: 1.1, rate: 0.95, preferredVoice: 'female' },
+    voiceSettings: { pitch: 1.05, rate: 0.98, preferredVoice: 'female' },
   },
   {
     id: 'law',
