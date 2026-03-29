@@ -119,7 +119,7 @@ const voiceSamples: VoiceSample[] = [
       "Metro Auto, Chris speaking. Interested in our certified pre-owned selection? We have over 50 vehicles under 30,000 miles with full warranty. What style are you looking for - sedan, SUV, or truck?",
       "Hi there! Chris at Metro Auto Group. I heard you're looking to trade in your vehicle. We're offering above-market value on trade-ins this week. Want to come in for a free appraisal?",
     ],
-    voiceSettings: { pitch: 0.92, rate: 0.95, preferredVoice: 'male' },
+    voiceSettings: { pitch: 0.96, rate: 0.94, preferredVoice: 'male' },
   },
 ];
 
