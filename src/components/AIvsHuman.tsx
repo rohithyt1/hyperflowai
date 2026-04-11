@@ -23,9 +23,9 @@ const comparisons = [
     humanIcon: <XCircle className="w-5 h-5 text-red-400" />,
   },
   {
-    feature: 'Cost Per Month',
-    ai: 'Flat $249/mo. Unlimited calls. No overtime, no benefits.',
-    human: '$2,500-4,000/mo salary + benefits + training + management.',
+    feature: 'Cost',
+    ai: 'One-time setup + small monthly usage fee. No overtime, no benefits.',
+    human: '₹25,000-50,000/mo salary + benefits + training + management.',
     aiIcon: <CheckCircle2 className="w-5 h-5 text-green-400" />,
     humanIcon: <XCircle className="w-5 h-5 text-red-400" />,
   },
@@ -48,15 +48,11 @@ const comparisons = [
 export function AIvsHuman() {
   return (
     <section className="py-16 md:py-24 relative overflow-hidden">
-      {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/[0.03] to-background" />
-      
-      {/* Decorative elements */}
       <div className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
       <div className="absolute bottom-20 right-10 w-72 h-72 bg-accent/5 rounded-full blur-3xl" />
 
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
-        {/* Header */}
         <div className="text-center mb-14">
           <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 px-4 py-2 rounded-full text-sm font-medium mb-4">
             <Zap className="w-4 h-4 text-primary" />
@@ -70,9 +66,7 @@ export function AIvsHuman() {
           </p>
         </div>
 
-        {/* Comparison Table */}
         <div className="max-w-5xl mx-auto">
-          {/* Header Row */}
           <div className="grid grid-cols-3 gap-3 mb-4 px-4">
             <div className="text-sm font-medium text-muted-foreground uppercase tracking-wider">Feature</div>
             <div className="text-center">
@@ -89,7 +83,6 @@ export function AIvsHuman() {
             </div>
           </div>
 
-          {/* Comparison Rows */}
           <div className="space-y-3">
             {comparisons.map((item, index) => (
               <div
@@ -112,12 +105,11 @@ export function AIvsHuman() {
           </div>
         </div>
 
-        {/* Bottom CTA */}
         <div className="text-center mt-12">
           <div className="inline-flex flex-col sm:flex-row items-center gap-4 bg-card/50 border border-primary/20 rounded-2xl px-8 py-6">
             <div className="text-left">
-              <p className="font-bold text-lg">Still paying a receptionist $3,000/mo?</p>
-              <p className="text-muted-foreground text-sm">Switch to AI for $249/mo. Same results, 10x cheaper.</p>
+              <p className="font-bold text-lg">Still paying a receptionist ₹30,000/mo?</p>
+              <p className="text-muted-foreground text-sm">Switch to AI. One-time setup. Pay only for what you use.</p>
             </div>
             <a
               href="https://cal.com/star-ment-yrerge/30min?overlayCalendar=true"

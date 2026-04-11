@@ -33,10 +33,11 @@ export function ROICalculator() {
   }, [avgTicket, missedCalls, callbackRate]);
 
   // AI receptionist cost in local currency
-  const aiCostUSD = 297;
-  const aiCost = currency === 'INR' ? Math.round(aiCostUSD * rate) : aiCostUSD;
+  // One-time setup cost (₹46,499 for AI Receptionist)
+  const setupCost = currency === 'INR' ? 46499 : Math.round(46499 / rate);
+  const monthlyApiCost = currency === 'INR' ? 5000 : Math.round(5000 / rate);
   const monthlyLoss = Math.round(recoveredRevenue / 12);
-  const roi = aiCost > 0 ? Math.round((monthlyLoss / aiCost) * 100) : 0;
+  const roi = monthlyApiCost > 0 ? Math.round((monthlyLoss / monthlyApiCost) * 100) : 0;
 
   const formatLocalPrice = (amount: number) => {
     if (currency === 'INR') {
@@ -158,12 +159,16 @@ export function ROICalculator() {
               </div>
 
               <div className="border-t border-border/50 pt-6 mt-6">
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-sm">AI Receptionist Cost</span>
-                  <span className="font-bold text-primary">{formatLocalPrice(aiCost)}/mo</span>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-sm">One-time Setup</span>
+                  <span className="font-bold text-primary">{formatLocalPrice(setupCost)}</span>
+                </div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-sm">Est. Monthly API Cost</span>
+                  <span className="font-bold text-primary">~{formatLocalPrice(monthlyApiCost)}/mo</span>
                 </div>
                 <div className="flex items-center justify-between mb-6">
-                  <span className="text-sm">ROI</span>
+                  <span className="text-sm">Monthly ROI</span>
                   <span className="font-bold text-green-500">
                     {roi}% return
                   </span>
