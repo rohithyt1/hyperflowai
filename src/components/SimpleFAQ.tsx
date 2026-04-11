@@ -23,8 +23,8 @@ const faqs = [
     a: "We do everything for you. Most businesses are live within 24 hours."
   },
   {
-    q: "Can I try it first?",
-    a: "Absolutely! We offer a 7-day paid trial for just $19. You get full access to test everything with real calls before committing."
+    q: "How does pricing work?",
+    a: "You pay a one-time setup fee per service, then only monthly API & maintenance costs based on your actual usage. No subscriptions, no lock-ins. For example, ~600 calls/month costs approximately ₹5,000/mo."
   },
 ];
 
